@@ -1,8 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { WorkflowInterface } from '../interfaces/workflow';
+import { HttpClient, HttpRequest, HttpHandler, HttpEvent, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class Workflow {
+export class WorkflowService {
+ 
+    
+    private http = inject(HttpClient);
+
   
+     execute(data: WorkflowInterface) {
+
+        return this.http.put(`http://localhost/tools/api/v1/workflow/execute`, data )
+      }
+    //this.data.push(newData);
 }
+

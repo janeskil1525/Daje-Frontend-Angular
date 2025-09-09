@@ -28,13 +28,6 @@ export class Projects {
 
   }
 
-  addData(project: string, state: string) {
-        const params = new HttpParams()
-                    .set('project', project)
-                    .set('state', state);
 
-    return this.http.put(`http://localhost/tools/api/v1/tools/projects`, { params } )
-    //this.data.push(newData);
-  }
 
 }
