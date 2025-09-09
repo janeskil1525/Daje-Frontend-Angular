@@ -1,0 +1,13 @@
+.row.gutterFix{
+    --bs-gutter-x: 0
+}
+
+.colSide{
+    flex: 0 0 auto;
+    width: 15%;
+}
+
+.colMain{
+    flex: 0 0 auto;
+    width: 85%;
+}
