@@ -1,0 +1,13 @@
+<p-select 
+[options]="projects" 
+[(ngModel)]="tools_projects_pkey" 
+[ngModelOptions]="{standalone: true}"
+placeholder="Select a project" 
+class="w-full md:w-56" 
+optionLabel="name"
+animate.enter="enter-animation"
+optionValue="tools_projects_pkey"
+[checkmark]="true"
+[filter]="true"
+(onChange)="loadTreelist(tools_projects_pkey)"
+/>

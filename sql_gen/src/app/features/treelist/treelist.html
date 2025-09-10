@@ -1,0 +1,8 @@
+<p-tree 
+[value]="nodes" 
+class="w-full md:w-[30rem]" s
+electionMode="single" 
+[(selection)]="selectedNode" 
+[contextMenu]="cm" />
+<p-contextmenu #cm 
+[model]="items" />

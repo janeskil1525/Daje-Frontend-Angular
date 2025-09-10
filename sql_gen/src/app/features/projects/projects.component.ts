@@ -1,0 +1,37 @@
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { SelectModule } from 'primeng/select';
+import { ProjectsService } from './projects.service';
+import { ProjectsInterface } from './projects.interface';
+import { LocalStorageService } from '../../core/localstorage/local-storage.service';
+
+@Component({
+  selector: 'p-select-projects',
+  imports: [SelectModule, FormsModule],
+  templateUrl: './projects.html',
+  styleUrl: './projects.css'
+})
+export class ProjectsComponent {
+    tools_projects_pkey: number = 0;
+
+  
+  
+    projects: ProjectsInterface[] = [];
+    
+  
+    constructor(
+      private projectservice: ProjectsService,  private localstorage: LocalStorageService
+    ) {}  
+  
+  
+    ngOnInit() {
+      this.localstorage.setItem('X-Token-Check', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW5pZXNfcGtleSI6MiwiaXNfYWRtaW4iOjAsIm5hbWUiOiJLbmVwIMOlIEtuw6VwIiwicGFzc3dvcmQiOiIwZ1lXNmpNdTd0XC9xZU5EdVFLaE43bE5KYm1pNEdOTGlUT3hkVlZScW1rMjROWUFqaUJUSWdFOGI0cFNYV1c2ZXZHT1BGUVdVMEttcnRydmpoWThkdUEiLCJzdXBwb3J0IjowLCJ1c2VyaWQiOiJqYW5AZGFqZS53b3JrIiwidXNlcm5hbWUiOiJKYW4gRXNraWxzc29uIiwidXNlcnNfcGtleSI6M30.sjcjX_9HVzDnIioX8iWBOZ7jMR26O4GXzxtzldlUWDw')
+       this.projectservice.getData().subscribe((data) => {
+            this.projects = data;
+      });
+    };
+  
+
+  
+  
+}

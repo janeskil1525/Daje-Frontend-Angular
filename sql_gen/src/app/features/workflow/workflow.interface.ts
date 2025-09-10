@@ -3,4 +3,4 @@ export interface WorkflowInterface {
     workflow_pkey: number,
     activity: string,
     data: any
-}
+};

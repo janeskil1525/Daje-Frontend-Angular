@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { Dialog } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { WorkflowService } from '../services/workflow';
+import { WorkflowService } from '../workflow/workflow.service';
 import { FormsModule } from '@angular/forms';
-import { WorkflowInterface } from '../interfaces/workflow';
+import { WorkflowInterface } from '../workflow/workflow.interface';
 
 @Component({
     selector: 'p-newproject-dialog',
@@ -32,7 +32,7 @@ export class NewProject {
         }
         
 
-        this.workflowservice.execute(workflowdata);
+        this.workflowservice.execute(data);
         this.visible = false;
     }
 }

@@ -1,12 +1,12 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable }  from 'rxjs';
-import { ToolsMenulist } from '../interfaces/tools.menulist';
+import { ToolsMenulist } from './menulist.interface';
 import { HttpClient, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class Menulist {
+export class MenulistService {
    private data: any[] = [];
   
     private http = inject(HttpClient);

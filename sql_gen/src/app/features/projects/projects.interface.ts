@@ -1,4 +1,4 @@
-export interface ToolsProjects {
+export interface ProjectsInterface {
 
     tools_projects_pkey: number;
     editnum: number;

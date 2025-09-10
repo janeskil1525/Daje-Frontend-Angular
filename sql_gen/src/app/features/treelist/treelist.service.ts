@@ -1,13 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
-import { ToolsTreelist } from '../interfaces/tools.treelist';
+import { ToolsTreelist } from './treelist.interface';
 import { Observable }  from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class Treelist {
+export class TreelistService {
    private data: any[] = [];
   
     private http = inject(HttpClient);

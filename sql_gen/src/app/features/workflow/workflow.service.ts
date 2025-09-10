@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { WorkflowInterface } from '../interfaces/workflow';
+import { WorkflowInterface } from './workflow.interface';
 import { HttpClient, HttpRequest, HttpHandler, HttpEvent, HttpParams } from '@angular/common/http';
 
 @Injectable({

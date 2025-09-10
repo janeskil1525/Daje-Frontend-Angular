@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Treelist } from './treelist';
+import { WorkflowService } from './workflow.service';
 
-describe('Treelist', () => {
-  let service: Treelist;
+describe('WorkflowService', () => {
+  let service: WorkflowService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Treelist);
+    service = TestBed.inject(WorkflowService);
   });
 
   it('should be created', () => {
