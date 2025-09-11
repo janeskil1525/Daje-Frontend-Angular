@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ObjectTreelist } from './treelist.coponent';
+import { TreelistComponent } from './treelist.component';
 
-describe('ObjectTreelist', () => {
-  let component: ObjectTreelist;
-  let fixture: ComponentFixture<ObjectTreelist>;
+describe('TreelistComponent', () => {
+  let component: TreelistComponent;
+  let fixture: ComponentFixture<TreelistComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ObjectTreelist]
+      imports: [TreelistComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ObjectTreelist);
+    fixture = TestBed.createComponent(TreelistComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

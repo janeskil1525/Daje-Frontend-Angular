@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { WorkflowService } from '../workflow/workflow.service';
 import { FormsModule } from '@angular/forms';
-import { WorkflowInterface } from '../workflow/workflow.interface';
+import { NewprojectInterface } from './newproject.interface';
 
 @Component({
     selector: 'p-newproject-dialog',
@@ -12,7 +12,7 @@ import { WorkflowInterface } from '../workflow/workflow.interface';
     standalone: true,
     imports: [Dialog, ButtonModule, InputTextModule, FormsModule]
 })
-export class NewProject {
+export class NewProjectComponent {
     visible: boolean = false;
     constructor( private workflowservice: WorkflowService ) {}  
     
@@ -24,11 +24,13 @@ export class NewProject {
     }
 
     saveProject() {
-        let workflowdata!: WorkflowInterface = {
+
+        let workflowdata: NewprojectInterface = {
             workflow: 'tools',
             workflow_pkey: 0,
-            data.project: this.project,
-            data.state: this.state,
+            activity:'save_new_project',
+            project: this.project,
+            state: this.state,
         }
         
 

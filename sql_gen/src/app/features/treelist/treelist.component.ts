@@ -10,7 +10,7 @@ import { ContextMenuModule } from 'primeng/contextmenu';
   templateUrl: './treelist.html',
   styleUrl: './treelist.css'
 })
-export class ObjectTreelist {
+export class TreelistComponent {
   selectedNode: string = "";
   nodes: any;
 
@@ -18,7 +18,7 @@ export class ObjectTreelist {
   items: MenuItem[] = [{label:'Table'}, {label:'Index'}, {label:'SQL'}];
 
   loadTreelist(tools_projects_pkey: number) {
-  this.treelistservice.getData(tools_projects_pkey).subscribe((data) => {
+    this.treelistservice.getData(tools_projects_pkey).subscribe((data) => {
         this.nodes = data;
   });
 

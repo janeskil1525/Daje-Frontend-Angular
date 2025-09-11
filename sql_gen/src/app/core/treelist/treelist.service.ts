@@ -14,7 +14,7 @@ export class TreelistService {
   
      getData(tools_projects_pkey: number): Observable<ToolsTreelist[]> {
   
-      return this.http.get<ToolsTreelist[]>('http://localhost/tools/api/v1/tools/trelist');
+      return this.http.get<ToolsTreelist[]>('http://localhost/tools/api/v1/tools/treelist');
   
     }
 }
