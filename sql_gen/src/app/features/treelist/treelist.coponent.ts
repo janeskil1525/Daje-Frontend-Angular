@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { TreeModule } from 'primeng/tree';
 import { MenuItem } from 'primeng/api';
-import { TreelistService } from '../treelist/treelist.service';
+import { TreelistService } from '../../core/treelist/treelist.service';
 import { ContextMenuModule } from 'primeng/contextmenu';
 
 @Component({

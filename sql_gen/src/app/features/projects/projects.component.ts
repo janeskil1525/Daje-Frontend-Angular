@@ -4,6 +4,7 @@ import { SelectModule } from 'primeng/select';
 import { ProjectsService } from './projects.service';
 import { ProjectsInterface } from './projects.interface';
 import { LocalStorageService } from '../../core/localstorage/local-storage.service';
+import { TreelistService } from '../../core/treelist/treelist.service';
 
 @Component({
   selector: 'p-select-projects',
@@ -11,16 +12,15 @@ import { LocalStorageService } from '../../core/localstorage/local-storage.servi
   templateUrl: './projects.html',
   styleUrl: './projects.css'
 })
+
 export class ProjectsComponent {
     tools_projects_pkey: number = 0;
-
-  
-  
+    nodes: any;
     projects: ProjectsInterface[] = [];
     
   
     constructor(
-      private projectservice: ProjectsService,  private localstorage: LocalStorageService
+      private projectservice: ProjectsService,  private localstorage: LocalStorageService, private treelistservice: TreelistService
     ) {}  
   
   
@@ -31,7 +31,10 @@ export class ProjectsComponent {
       });
     };
   
-
-  
+  loadTreelist(tools_projects_pkey: number) {
+  this.treelistservice.getData(tools_projects_pkey).subscribe(data => {
+        this.nodes = data;
+  });
+}
   
 }

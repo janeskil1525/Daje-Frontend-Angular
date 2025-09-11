@@ -32,7 +32,7 @@ export class NewProject {
         }
         
 
-        this.workflowservice.execute(data);
+        this.workflowservice.execute(workflowdata);
         this.visible = false;
     }
 }
