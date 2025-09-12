@@ -33,8 +33,9 @@ export class NewProjectComponent {
             state: this.state,
         }
         
-
-        this.workflowservice.execute(workflowdata);
+        this.workflowservice.execute(workflowdata).subscribe(response => {
+            console.log(response);
+        });
         this.visible = false;
     }
 }

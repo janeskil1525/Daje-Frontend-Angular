@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
 import { ProjectsService } from './projects.service';
@@ -15,14 +15,13 @@ import { TreelistService } from '../../core/treelist/treelist.service';
 
 export class ProjectsComponent {
     tools_projects_pkey: number = 0;
-    nodes: any;
+    nodes = model();
+
     projects: ProjectsInterface[] = [];
     
-  
     constructor(
       private projectservice: ProjectsService,  private localstorage: LocalStorageService, private treelistservice: TreelistService
     ) {}  
-  
   
     ngOnInit() {
       this.localstorage.setItem('X-Token-Check', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW5pZXNfcGtleSI6MiwiaXNfYWRtaW4iOjAsIm5hbWUiOiJLbmVwIMOlIEtuw6VwIiwicGFzc3dvcmQiOiIwZ1lXNmpNdTd0XC9xZU5EdVFLaE43bE5KYm1pNEdOTGlUT3hkVlZScW1rMjROWUFqaUJUSWdFOGI0cFNYV1c2ZXZHT1BGUVdVMEttcnRydmpoWThkdUEiLCJzdXBwb3J0IjowLCJ1c2VyaWQiOiJqYW5AZGFqZS53b3JrIiwidXNlcm5hbWUiOiJKYW4gRXNraWxzc29uIiwidXNlcnNfcGtleSI6M30.sjcjX_9HVzDnIioX8iWBOZ7jMR26O4GXzxtzldlUWDw')
@@ -31,10 +30,10 @@ export class ProjectsComponent {
       });
     };
   
-  loadTreelist(tools_projects_pkey: number) {
-  this.treelistservice.getData(tools_projects_pkey).subscribe(data => {
-        this.nodes = data;
-  });
+    loadTreelist(tools_projects_pkey: number) {
+    this.treelistservice.getData(tools_projects_pkey).subscribe(data => {
+          this.nodes.set( data );
+    });
 }
   
 }
