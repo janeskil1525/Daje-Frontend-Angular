@@ -3,8 +3,12 @@ import { Dialog } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { WorkflowService } from '../workflow/workflow.service';
+import { WorkflowPayload } from '../../core/workflow/workflow.payload';
+import { WorkflowPayloadInterface } from '../../core/workflow/workflow.interface';
+
 import { FormsModule } from '@angular/forms';
 import { NewprojectInterface } from './newproject.interface';
+
 
 @Component({
     selector: 'p-newproject-dialog',
@@ -24,15 +28,18 @@ export class NewProjectComponent {
     }
 
     saveProject() {
+        let load: WorkflowPayload;
+        let workflowdata: WorkflowPayloadInterface;
 
-        let workflowdata: NewprojectInterface = {
-            workflow: 'tools',
-            workflow_pkey: 0,
-            activity:'save_new_project',
+        load = new WorkflowPayload();
+
+        let payload: NewprojectInterface = {
             project: this.project,
             state: this.state,
         }
         
+        workflowdata = load.builCall('tool', 0, 'save_project', payload);
+
         this.workflowservice.execute(workflowdata).subscribe(response => {
             console.log(response);
         });

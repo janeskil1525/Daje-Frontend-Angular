@@ -1,6 +1,5 @@
-import { WorkflowInterface } from '../../core/workflow/workflow.interface';
 
-export interface NewprojectInterface extends WorkflowInterface {
+export interface NewprojectInterface  {
     state: string,
     project:string
 }
