@@ -5,6 +5,7 @@ import { ProjectsService } from './projects.service';
 import { ProjectsInterface } from './projects.interface';
 import { LocalStorageService } from '../../core/localstorage/local-storage.service';
 import { TreelistService } from '../../core/treelist/treelist.service';
+import { TreelistLoadService } from '../../core/treelist/treelist.load.service';
 
 @Component({
   selector: 'p-select-projects',
@@ -20,7 +21,10 @@ export class ProjectsComponent {
     projects: ProjectsInterface[] = [];
     
     constructor(
-      private projectservice: ProjectsService,  private localstorage: LocalStorageService, private treelistservice: TreelistService
+      private projectservice: ProjectsService,  
+      private localstorage: LocalStorageService, 
+      private treelistservice: TreelistService,
+      private loadTreeListService: TreelistLoadService
     ) {}  
   
     ngOnInit() {
@@ -30,10 +34,9 @@ export class ProjectsComponent {
       });
     };
   
-    loadTreelist(tools_projects_pkey: number) {
-    this.treelistservice.getData(tools_projects_pkey).subscribe(data => {
-          this.nodes.set( data );
-    });
+    loadTreeList(tools_projects_pkey: number) {
+      this.loadTreeListService.sendClickEvent(tools_projects_pkey);
+    };
+
 }
-  
-}
+

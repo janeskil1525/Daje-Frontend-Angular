@@ -27,18 +27,20 @@ export class NewProjectComponent {
         this.visible = true;
     }
 
-    saveProject() {
+    saveProject() {    
         let load: WorkflowPayload;
         let workflowdata: WorkflowPayloadInterface;
 
         load = new WorkflowPayload();
 
         let payload: NewprojectInterface = {
-            project: this.project,
+            name: this.project,
             state: this.state,
         }
         
-        workflowdata = load.builCall('tool', 0, 'save_project', payload);
+        workflowdata = load.builCall(
+            'tools', 0, 'save_new_project', payload,'tools_project',0
+        );
 
         this.workflowservice.execute(workflowdata).subscribe(response => {
             console.log(response);
