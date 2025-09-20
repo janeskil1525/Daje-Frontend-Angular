@@ -1,8 +1,11 @@
+<li
+    class="p-2 hover:bg-surface-100 dark:hover:bg-surface-800 rounded border border-transparent transition-all transition-duration-200"
+    (contextmenu)="onContextMenu($event)"
+>
 <p-tree 
 [value]=nodes
 class="w-full md:w-[30rem]" s
 selectionMode="single" 
 [(selection)]="selectedNode" 
 [contextMenu]="cm" />
-<p-contextmenu #cm 
-[model]="items" />
+<p-contextmenu #cm [model]="items"  (onHide)="onHide()" />

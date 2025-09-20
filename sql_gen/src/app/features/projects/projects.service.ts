@@ -19,7 +19,7 @@ export class ProjectsService {
    getData(): Observable<ProjectsInterface[]> {
     this.localkey = this.localstorage.getItem('X-Token-Check')!;
 
-    return this.http.get<ProjectsInterface[]>('http://localhost/tools/api/v1/tools/projects',{
+    return this.http.get<ProjectsInterface[]>('http://localhost/tools/api/v1/projects',{
       headers:{
         'X-Token-Check': this.localkey
         //''
