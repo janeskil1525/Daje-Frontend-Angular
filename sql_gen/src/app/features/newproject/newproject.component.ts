@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Dialog } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { WorkflowService } from '../workflow/workflow.service';
+import { WorkflowService } from '../../core/workflow/workflow.service';
 import { WorkflowPayload } from '../../core/workflow/workflow.payload';
 import { WorkflowPayloadInterface } from '../../core/workflow/workflow.interface';
 

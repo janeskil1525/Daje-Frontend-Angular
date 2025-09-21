@@ -2,23 +2,35 @@
 <html>
 <body>
 
-<div>
-<form>
-<div style="display:flex; width: 100%; height: 100%;">
-<p-select-projects></p-select-projects>
+<p-splitter [panelSizes]="[25, 75]" [style]="{ height: '900px' }" class="mb-8">
+    <ng-template #panel>
+        <form>
+            <div style="display:flex; width: 100%; height: 100%;">
+                <p-select-projects></p-select-projects> 
+                <p-newproject-dialog />
+            
+            </div>
+            <br>
+                <p-divider type="solid" />
+            <br>
+            <p-object-treelist></p-object-treelist>
+         </form>
+    </ng-template>
 
-<p-newproject-dialog />
+    <ng-template #panel>
+        <div class="card flex justify-center">
+            <p-panel header="Header">
+                <p class="m-0">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+            </p-panel>
+        </div>
+    </ng-template>
+</p-splitter>
 
-</div>
-<p>
-
-<p-object-treelist></p-object-treelist>
-
-</form>
 
 
-
-</div>
    
     </body>
 </html>

@@ -8,13 +8,27 @@ import { ProjectsComponent } from './features/projects/projects.component';
 
 import { TreelistComponent } from './features/treelist/treelist.component';
 import { NewProjectComponent } from './features/newproject/newproject.component';
-
+import { SplitterModule } from 'primeng/splitter';
+import { PanelModule } from 'primeng/panel';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.css',
-  imports: [TreelistComponent, SelectModule, FormsModule, TreeModule, ContextMenuModule, ToastModule, NewProjectComponent, ProjectsComponent],
+  imports: [TreelistComponent, 
+    SelectModule, 
+    FormsModule, 
+    TreeModule, 
+    ContextMenuModule, 
+    ToastModule, 
+    NewProjectComponent, 
+    ProjectsComponent,
+    SplitterModule,
+    PanelModule,
+    DividerModule
+  ],
+
   standalone: true
 })
 

@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpRequest, HttpHandler, HttpEvent, HttpParams } from '@angular/common/http';
-import { LocalStorageService } from '../../core/localstorage/local-storage.service';
+import { LocalStorageService } from '../localstorage/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
