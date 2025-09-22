@@ -11,6 +11,7 @@ import { NewProjectComponent } from './features/newproject/newproject.component'
 import { SplitterModule } from 'primeng/splitter';
 import { PanelModule } from 'primeng/panel';
 import { DividerModule } from 'primeng/divider';
+import { TableComponent } from './features/table/table.component';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,8 @@ import { DividerModule } from 'primeng/divider';
     ProjectsComponent,
     SplitterModule,
     PanelModule,
-    DividerModule
+    DividerModule,
+    TableComponent
   ],
 
   standalone: true
