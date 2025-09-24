@@ -5,14 +5,13 @@ export class WorkflowPayload {
     builCall(
         workflow:string, workflow_pkey:number, 
         activity:string, payload:any, 
-        connector: string, connector_fkey:number) {
+        connector: string) {
         
         let workflowparams: WorkflowInterface = {
             workflow: workflow,
             workflow_pkey: workflow_pkey,
             activity: activity,
-            connector: connector,
-            connector_fkey: connector_fkey
+            connector: connector
         }
 
         let workflowdata: WorkflowPayloadInterface = {

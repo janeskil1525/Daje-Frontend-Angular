@@ -7,6 +7,7 @@ import { ContextMenu } from 'primeng/contextmenu';
 import { TreelistLoadService } from '../../core/treelist/treelist.load.service';
 import { Subscription } from 'rxjs';
 import { BadgeModule } from 'primeng/badge';
+import { ObjectGuiService } from '../object/object.gui.service';
 
 @Component({
   selector: 'p-object-treelist',
@@ -24,20 +25,22 @@ export class TreelistComponent{
   @ViewChild('cm') cm!: ContextMenu;
   selectedId!: string;
 
-  clickEventsubscription!:Subscription;
- 
+  loadTreelistDataSub!:Subscription;
 
    constructor(
     private treelistservice: TreelistService, 
-    private loadTreeListService: TreelistLoadService
+    private loadTreeListService: TreelistLoadService,
+    private loadObjecteGUI: ObjectGuiService
   ) {};
 
     ngOnInit() {
-      this.clickEventsubscription = this.loadTreeListService.getClickEvent().subscribe(()=>{
+      this.loadTreelistDataSub = this.loadTreeListService.getClickEvent().subscribe(()=>{
           this.treelistservice.getData(this.loadTreeListService.getTools_projects_pkey()).subscribe(data => {
               this.loadTreelist(data)
-        });
-    });
+          });
+      });
+
+
 
      this.items = [
       {label:'Table', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}, 
@@ -47,12 +50,7 @@ export class TreelistComponent{
   }
 
   addItem(node: any) {
-    let keyarr = node.id.split('-') ;
-    let key = keyarr[0];
-    let type = keyarr[2];
-    
-    node = node;
-    node = node;
+    this.loadObjecteGUI.sendClickEvent(node);
   }
 
   onHide() {

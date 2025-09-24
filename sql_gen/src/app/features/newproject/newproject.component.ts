@@ -39,7 +39,7 @@ export class NewProjectComponent {
         }
         
         workflowdata = load.builCall(
-            'tools', 0, 'save_new_project', payload,'tools_project',0
+            'tools', 0, 'save_new_project', payload,'tools_projects'
         );
 
         this.workflowservice.execute(workflowdata).subscribe(response => {
