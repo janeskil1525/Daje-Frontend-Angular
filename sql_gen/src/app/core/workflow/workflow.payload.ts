@@ -7,20 +7,20 @@ export class WorkflowPayload {
         activity:string, payload:any, 
         connector: string) {
         
-        let workflowparams: WorkflowInterface = {
-            workflow: workflow,
-            workflow_pkey: workflow_pkey,
-            activity: activity,
-            connector: connector
-        }
+            let workflowparams: WorkflowInterface = {
+                workflow: workflow,
+                workflow_pkey: workflow_pkey,
+                activity: activity,
+                connector: connector,
+            }
 
-        let workflowdata: WorkflowPayloadInterface = {
-            workflow: workflowparams,
-            payload: payload,
+            let workflowdata: WorkflowPayloadInterface = {
+                workflow: workflowparams,
+                payload: payload,
 
-        };
+            };
 
-        return workflowdata;
+            return workflowdata;
     }
 
 };
