@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
-import { ToolsTreelist } from './treelist.interface';
+import { ResponseInterface } from '../response/response.interface';
 import { Observable }  from 'rxjs';
 
 @Injectable({
@@ -12,9 +12,9 @@ export class TreelistService {
   
     private http = inject(HttpClient);
   
-     getData(tools_projects_pkey: number): Observable<ToolsTreelist[]> {
+     getData(tools_projects_pkey: number): Observable<ResponseInterface[]> {
   
-      return this.http.get<ToolsTreelist[]>('http://localhost/tools/api/v1/treelist/' + tools_projects_pkey);
+      return this.http.get<ResponseInterface[]>('http://localhost/tools/api/v1/treelist/' + tools_projects_pkey);
   
     }
 }
