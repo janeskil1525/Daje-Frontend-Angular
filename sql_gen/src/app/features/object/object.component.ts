@@ -12,6 +12,7 @@ import { ObjectInterface } from './object.interface';
 import { WorkflowService } from '../../core/workflow/workflow.service';
 import { WorkflowPayload } from '../../core/workflow/workflow.payload';
 import { WorkflowPayloadInterface } from '../../core/workflow/workflow.interface';
+import { ResponseService } from '../../core/response/response.service'
 
 @Component({
   selector: 'p-object-component',
@@ -28,13 +29,18 @@ import { WorkflowPayloadInterface } from '../../core/workflow/workflow.interface
   styleUrl: './object.component.css',
   standalone: true,
 })
+
 export class ObjectComponent {
   isActive: boolean = false;
   isVisible: boolean = false;
   tablename: string ="";
   loadObjectGUISub!:Subscription;
 
-  constructor(private loadObjectGUI: ObjectGuiService, private workflowservice: WorkflowService) {}
+  constructor(
+    private loadObjectGUI: ObjectGuiService, 
+    private workflowservice: WorkflowService,
+    private responseservice: ResponseService 
+  ) {}
 
   ngOnInit() {
         this.loadObjectGUISub = this.loadObjectGUI.getClickEvent().subscribe(()=>{
@@ -62,6 +68,7 @@ export class ObjectComponent {
     );
 
     this.workflowservice.execute(workflowdata).subscribe(response => {
+        this.responseservice.sendResponse(response)
         console.log(response);
     });
     this.isVisible = false;

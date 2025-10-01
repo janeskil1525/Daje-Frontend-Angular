@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpRequest, HttpHandler, HttpEvent, HttpParams } from '@angular/common/http';
-import { ProjectsInterface } from './projects.interface';
+import { HttpClient } from '@angular/common/http';
+import { ResponseInterface } from '../../core/response/response.interface';
 import { Observable }  from 'rxjs';
 import { LocalStorageService } from '../../core/localstorage/local-storage.service';
 
@@ -16,10 +16,10 @@ export class ProjectsService {
 
   constructor(private localstorage: LocalStorageService) {}
 
-   getData(): Observable<ProjectsInterface[]> {
+   getData(): Observable<ResponseInterface[]> {
     this.localkey = this.localstorage.getItem('X-Token-Check')!;
 
-    return this.http.get<ProjectsInterface[]>('http://localhost/tools/api/v1/projects',{
+    return this.http.get<ResponseInterface[]>('http://localhost/tools/api/v1/projects',{
       headers:{
         'X-Token-Check': this.localkey
         //''

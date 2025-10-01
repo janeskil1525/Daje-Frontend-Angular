@@ -8,7 +8,7 @@ import { WorkflowPayloadInterface } from '../../core/workflow/workflow.interface
 
 import { FormsModule } from '@angular/forms';
 import { NewprojectInterface } from './newproject.interface';
-
+import { ResponseService } from '../../core/response/response.service'
 
 @Component({
     selector: 'p-newproject-dialog',
@@ -16,9 +16,13 @@ import { NewprojectInterface } from './newproject.interface';
     standalone: true,
     imports: [Dialog, ButtonModule, InputTextModule, FormsModule]
 })
+
 export class NewProjectComponent {
     visible: boolean = false;
-    constructor( private workflowservice: WorkflowService ) {}  
+    constructor( 
+        private workflowservice: WorkflowService, 
+        private responseservice: ResponseService 
+    ) {}  
     
     project: string = '';
     state: string = '';
@@ -43,6 +47,7 @@ export class NewProjectComponent {
         );
 
         this.workflowservice.execute(workflowdata).subscribe(response => {
+            this.responseservice.sendResponse(response);
             console.log(response);
         });
         this.visible = false;

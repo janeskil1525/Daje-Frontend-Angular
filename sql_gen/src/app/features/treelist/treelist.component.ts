@@ -8,6 +8,8 @@ import { TreelistLoadService } from '../../core/treelist/treelist.load.service';
 import { Subscription } from 'rxjs';
 import { BadgeModule } from 'primeng/badge';
 import { ObjectGuiService } from '../object/object.gui.service';
+import { ResponseService } from '../../core/response/response.service';
+import { ResponseInterface } from '../../core/response/response.interface';
 
 @Component({
   selector: 'p-object-treelist',
@@ -30,13 +32,14 @@ export class TreelistComponent{
    constructor(
     private treelistservice: TreelistService, 
     private loadTreeListService: TreelistLoadService,
-    private loadObjecteGUI: ObjectGuiService
+    private loadObjecteGUI: ObjectGuiService,
+    private responseservice: ResponseService 
   ) {};
 
     ngOnInit() {
       this.loadTreelistDataSub = this.loadTreeListService.getClickEvent().subscribe(()=>{
-          this.treelistservice.getData(this.loadTreeListService.getTools_projects_pkey()).subscribe(data => {
-              this.loadTreelist(data)
+          this.treelistservice.getData(this.loadTreeListService.getTools_projects_pkey()).subscribe(response => {
+              this.loadTreelist(response)
           });
       });
 
@@ -59,8 +62,15 @@ export class TreelistComponent{
   }
   
 
-  loadTreelist(data: any) {
-      this.nodes = data;
+  loadTreelist(response: ResponseInterface[]) {
+    this.responseservice.sendResponse(response);
+
+    let access = (key: string) => {
+      return response[key as keyof typeof response];
+    };
+
+    this.nodes = Object.assign([], access("data")) ;
+  
   };
 }
 

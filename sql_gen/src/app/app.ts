@@ -12,6 +12,7 @@ import { SplitterModule } from 'primeng/splitter';
 import { PanelModule } from 'primeng/panel';
 import { DividerModule } from 'primeng/divider';
 import { ObjectComponent } from './features/object/object.component';
+import { ResponseComponent } from './core/response/response.component';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,8 @@ import { ObjectComponent } from './features/object/object.component';
     SplitterModule,
     PanelModule,
     DividerModule,
-    ObjectComponent
+    ObjectComponent,
+    ResponseComponent
   ],
 
   standalone: true
