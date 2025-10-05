@@ -1,11 +1,17 @@
+export interface WorkflowIdentificationData {
+    workflow_pkey: number,
+    connector: string,
+    connector_pkey:number
+}
+
 export interface WorkflowInterface {
     workflow: string,
-    workflow_pkey: number,
     activity: string,
-    connector: string,
+    connector_data: WorkflowIdentificationData,
 };
 
 export interface WorkflowPayloadInterface {
     workflow: WorkflowInterface,
     payload: any
 };
+

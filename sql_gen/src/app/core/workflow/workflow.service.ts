@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpRequest, HttpHandler, HttpEvent, HttpParams } from '@angular/common/http';
 import { LocalStorageService } from '../localstorage/local-storage.service';
+import { WorkflowIdentificationData } from './workflow.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ import { LocalStorageService } from '../localstorage/local-storage.service';
 export class WorkflowService {
 
     private localkey: string = '';
+    private connector_data: WorkflowIdentificationData = {connector:"", connector_pkey:0, workflow_pkey:0};
+
     constructor(
       private  localstorage: LocalStorageService
     ) {}  
@@ -23,6 +26,17 @@ export class WorkflowService {
           'X-Token-Check': this.localkey
         }});
       }
+
+      setConnectorData(connector: string, connector_pkey:number, workflow_fkey:number) {
+        this.connector_data.connector = connector;
+        this.connector_data.connector_pkey = connector_pkey;
+        this.connector_data.workflow_pkey = workflow_fkey;
+      }
+
+      getConnectorData() {
+        return this.connector_data;
+      }
+
     //this.data.push(newData);
 }
 

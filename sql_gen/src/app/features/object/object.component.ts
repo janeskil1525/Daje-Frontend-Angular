@@ -53,18 +53,18 @@ export class ObjectComponent {
     let workflowdata: WorkflowPayloadInterface;
 
     load = new WorkflowPayload();
-
+    let tools_version_fkey = this.loadObjectGUI.getVersionData().id.split("-")[0];
     let payload: ObjectInterface = {
         name: this.tablename,
-        active: this.isActive,
+        active: true,
         type:'table',
-        tools_version_fkey: this.loadObjectGUI.getVersionData().id,
+        tools_version_fkey: tools_version_fkey,
         tools_objects_pkey:0
 
     }
     
     workflowdata = load.builCall(
-        'tools', this.loadObjectGUI.getVersionData().workflow_fkey, 'save_new_object', payload,'tools_project'
+        'tools', 'save_new_object', payload, this.workflowservice.getConnectorData()
     );
 
     this.workflowservice.execute(workflowdata).subscribe(response => {

@@ -4,7 +4,7 @@ import { SelectModule } from 'primeng/select';
 import { ProjectsService } from './projects.service';
 import { ProjectsInterface } from './projects.interface';
 import { LocalStorageService } from '../../core/localstorage/local-storage.service';
-import { TreelistService } from '../../core/treelist/treelist.service';
+import { WorkflowService } from '../../core/workflow/workflow.service';
 import { TreelistLoadService } from '../../core/treelist/treelist.load.service';
 import { ResponseService } from '../../core/response/response.service'
 
@@ -24,7 +24,7 @@ export class ProjectsComponent {
     constructor(
       private projectservice: ProjectsService,  
       private localstorage: LocalStorageService, 
-      private treelistservice: TreelistService,
+      private workflowservice: WorkflowService,
       private loadTreeListService: TreelistLoadService,
       private responseservice: ResponseService 
     ) {}  
@@ -32,7 +32,7 @@ export class ProjectsComponent {
     ngOnInit() {
       this.localstorage.setItem('X-Token-Check', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW5pZXNfcGtleSI6MiwiaXNfYWRtaW4iOjAsIm5hbWUiOiJLbmVwIMOlIEtuw6VwIiwicGFzc3dvcmQiOiIwZ1lXNmpNdTd0XC9xZU5EdVFLaE43bE5KYm1pNEdOTGlUT3hkVlZScW1rMjROWUFqaUJUSWdFOGI0cFNYV1c2ZXZHT1BGUVdVMEttcnRydmpoWThkdUEiLCJzdXBwb3J0IjowLCJ1c2VyaWQiOiJqYW5AZGFqZS53b3JrIiwidXNlcm5hbWUiOiJKYW4gRXNraWxzc29uIiwidXNlcnNfcGtleSI6M30.sjcjX_9HVzDnIioX8iWBOZ7jMR26O4GXzxtzldlUWDw')
        this.projectservice.getData().subscribe((response) => {
-        
+
             this.responseservice.sendResponse(response);
             let access = (key: string) => {
               return response[key as keyof typeof response];
@@ -43,6 +43,9 @@ export class ProjectsComponent {
     };
   
     loadTreeList(tools_projects_pkey: number) {
+      let result = this.projects.find(project => project.tools_projects_pkey === tools_projects_pkey);
+      this.workflowservice.setConnectorData('tools_projects', result!.tools_projects_pkey, result!.workflow_fkey)
+      this.projects=this.projects;
       this.loadTreeListService.sendClickEvent(tools_projects_pkey);
     };
 

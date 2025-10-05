@@ -1,17 +1,18 @@
-import { WorkflowPayloadInterface,  WorkflowInterface} from './workflow.interface';
+import { WorkflowPayloadInterface,  WorkflowInterface, WorkflowIdentificationData} from './workflow.interface';
 
 export class WorkflowPayload {
 
     builCall(
-        workflow:string, workflow_pkey:number, 
-        activity:string, payload:any, 
-        connector: string) {
+        workflow:string, 
+        activity:string, 
+        payload:any, 
+        connector_data: WorkflowIdentificationData,
+    ) {
         
             let workflowparams: WorkflowInterface = {
                 workflow: workflow,
-                workflow_pkey: workflow_pkey,
                 activity: activity,
-                connector: connector,
+                connector_data: connector_data,
             }
 
             let workflowdata: WorkflowPayloadInterface = {
