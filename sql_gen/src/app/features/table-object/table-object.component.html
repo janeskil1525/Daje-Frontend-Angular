@@ -1,1 +1,16 @@
-<p>table-object.component works!</p>
+<div class="card flex flex-wrap justify-center items-end gap-4">
+    <p-floatlabel>
+        <input pInputText id="over_label" [(ngModel)]="tableobject.fieldname" autocomplete="off" />
+        <label for="on_label">Over Label</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="in">
+        <input pInputText id="in_label" [(ngModel)]="value2" autocomplete="off" />
+        <label for="on_label">In Label</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="on">
+        <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" />
+        <label for="on_label">On Label</label>
+    </p-floatlabel>
+</div>
