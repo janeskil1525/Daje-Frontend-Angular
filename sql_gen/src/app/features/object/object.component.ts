@@ -82,6 +82,7 @@ export class ObjectComponent {
     let type = keyarr[2]; 
 
   }
+  
   hideWin() {
      this.isVisible = false;
   }

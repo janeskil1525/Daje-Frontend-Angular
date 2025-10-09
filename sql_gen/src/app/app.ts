@@ -13,6 +13,7 @@ import { PanelModule } from 'primeng/panel';
 import { DividerModule } from 'primeng/divider';
 import { ObjectComponent } from './features/object/object.component';
 import { ResponseComponent } from './core/response/response.component';
+import { TableObjectComponent } from './features/table-object/table-object.component';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +31,8 @@ import { ResponseComponent } from './core/response/response.component';
     PanelModule,
     DividerModule,
     ObjectComponent,
-    ResponseComponent
+    ResponseComponent,
+    TableObjectComponent
   ],
 
   standalone: true

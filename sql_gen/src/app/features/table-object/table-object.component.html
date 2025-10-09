@@ -1,16 +1,52 @@
-<div class="card flex flex-wrap justify-center items-end gap-4">
-    <p-floatlabel>
-        <input pInputText id="over_label" [(ngModel)]="tableobject.fieldname" autocomplete="off" />
-        <label for="on_label">Over Label</label>
-    </p-floatlabel>
 
-    <p-floatlabel variant="in">
-        <input pInputText id="in_label" [(ngModel)]="value2" autocomplete="off" />
-        <label for="on_label">In Label</label>
-    </p-floatlabel>
+@if (isVisible) {
+    <div class="card flex flex-wrap justify-center items-end gap-4">
+        <p-card [style]="{ width: '25rem', overflow: 'hidden' }">  
+            <div class="flex gap-4 mt-1 p-3">
+                <p-floatlabel variant="on">
+                    <input pInputText id="fieldname" [(ngModel)]="fieldname" autocomplete="off" />
+                    <label for="fieldname">Field name</label>
+                </p-floatlabel>
+            </div>
+            <p-select 
+                [options]="datatypes" 
+                [(ngModel)]="tools_object_tables_pkey" 
+                [ngModelOptions]="{standalone: true}"
+                placeholder="Select a datatype" 
+                class="w-full md:w-56" 
+                optionLabel="name"
+                animate.enter="enter-animation"
+                optionValue="tools_projects_pkey"
+                [checkmark]="true"
+                [filter]="true"
+                (onChange)="setupGUI(tools_object_tables_pkey)"
+            />
+            <div class="flex gap-4 mt-1 p-3">
+                <p-floatlabel variant="on">
+                    <input pInputText id="length" [(ngModel)]="length" autocomplete="off" />
+                    <label for="length">Length</label>
+                </p-floatlabel>
+            </div>
+            <div class="flex gap-4 mt-1 p-3">
+                <p-floatlabel variant="on">
+                    <input pInputText id="scale" [(ngModel)]="scale" autocomplete="off" />
+                    <label for="scale">Scale</label>
+                </p-floatlabel>
+            </div>
+            <div class="flex gap-4 mt-1 p-3">       
+                <p-checkbox inputId="active" name="active" value="true" [(ngModel)]="active" />
+                <label for="active" class="ml-2"> Active </label>                  
+            </div>
 
-    <p-floatlabel variant="on">
-        <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" />
-        <label for="on_label">On Label</label>
-    </p-floatlabel>
-</div>
+            <div class="flex gap-4 mt-1 p-3">
+                <p-checkbox inputId="visible" name="visible" value="true" [(ngModel)]="visible" />
+                <label for="visible" class="ml-2"> Visible </label>                  
+            </div>
+
+            <div class="flex gap-4 mt-1">
+                <p-button (click)="hideWin()" label="Cancel" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full" />
+                <p-button (click)="saveTableObject()"  label="Save" class="w-full" styleClass="w-full" />
+            </div>
+        </p-card>
+    </div>
+}

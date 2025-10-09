@@ -10,6 +10,8 @@ import { BadgeModule } from 'primeng/badge';
 import { ObjectGuiService } from '../object/object.gui.service';
 import { ResponseService } from '../../core/response/response.service';
 import { ResponseInterface } from '../../core/response/response.interface';
+import { TableObjectService } from '../table-object/table-object.gui.service';
+
 
 @Component({
   selector: 'p-object-treelist',
@@ -33,7 +35,8 @@ export class TreelistComponent{
     private treelistservice: TreelistService, 
     private loadTreeListService: TreelistLoadService,
     private loadObjecteGUI: ObjectGuiService,
-    private responseservice: ResponseService 
+    private responseservice: ResponseService ,
+    private loadTableObjecteGUI: TableObjectService
   ) {};
 
     ngOnInit() {
@@ -42,18 +45,31 @@ export class TreelistComponent{
               this.loadTreelist(response)
           });
       });
+  }
 
-
-
-     this.items = [
-      {label:'Table', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}, 
-      {label:'Index', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}, 
-      {label:'SQL', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}
-    ];
+  nodeSelect(event:any) {
+    let type = this.getType(event.node);
+    if (type === "tools_version") {
+        this.items = [
+          {label:'Table', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}, 
+          {label:'Index', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}, 
+          {label:'SQL', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}
+        ];
+    } else if ( type === "tools_objects") {
+      this.items = [
+          {label:'New Table Object', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}
+        ];
+    }
   }
 
   addItem(node: any) {
-    this.loadObjecteGUI.sendClickEvent(node);
+    let type = this.getType(node);
+    if (type === "tools_version") {
+      this.loadObjecteGUI.sendClickEvent(node);
+    } else if ( type === "tools_objects") {
+      this.loadTableObjecteGUI.sendClickEvent(node);
+    }
+
   }
 
   onHide() {
@@ -61,7 +77,6 @@ export class TreelistComponent{
     this.selectedId = '';
   }
   
-
   loadTreelist(response: ResponseInterface[]) {
     this.responseservice.sendResponse(response);
 
@@ -72,5 +87,11 @@ export class TreelistComponent{
     this.nodes = Object.assign([], access("data")) ;
   
   };
+
+  getType(node: any) {
+    let type = node.id;
+    type = type.split("-")[1];
+    return type;
+  }
 }
 
