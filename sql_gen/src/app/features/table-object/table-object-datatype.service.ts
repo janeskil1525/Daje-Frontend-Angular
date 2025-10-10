@@ -17,7 +17,7 @@ export class TableObjectDatatypeService {
 
   load_table_objects_datatypes() {
     this.localkey = this.localstorage.getItem('X-Token-Check')!;
-    return this.http.get(`http://localhost/tools/api/v1/table/objects/datatypes/`, 
+    return this.http.get(`http://localhost/tools/api/v1/table/object/datatypes/`, 
         { headers:{
       'X-Token-Check': this.localkey
     }});

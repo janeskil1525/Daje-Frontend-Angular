@@ -10,6 +10,8 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { SelectModule } from 'primeng/select';
 import { TableObjectDatatypeInterface } from './table-object-datatype.interface';
+import { TableObjectDatatypeService } from './table-object-datatype.service';
+import { ResponseService } from '../../core/response/response.service';
 
 @Component({
   selector: 'p-table-object-component',
@@ -29,23 +31,37 @@ import { TableObjectDatatypeInterface } from './table-object-datatype.interface'
 
 export class TableObjectComponent {
   tableobject!:TableObjectInterface;
-  clickEventsubscription:Subscription;
+  clickEventsubscription!:Subscription;
   isVisible: boolean = false;
   fieldname: string = "";
   length: number = 0;
   scale: number = 0;
   active:boolean = false;
   visible: boolean = false;
-  tools_object_tables_pkey: number = 0;
+  tools_objects_tables_datatypes_pkey: number = 0;
   datatypes: TableObjectDatatypeInterface[] = [];
 
-  constructor(private loadTableObjecteGUI:TableObjectService){
+  constructor(
+    private loadTableObjecteGUI:TableObjectService,
+    private tableobjectdatatypeservice:TableObjectDatatypeService,
+    private responseservice: ResponseService 
+  ){}
     
+   ngOnInit() {
+    this.tableobjectdatatypeservice.load_table_objects_datatypes().subscribe((response) => {
+        this.responseservice.sendResponse(response);
+        let access = (key: string) => {
+          return response[key as keyof typeof response];
+        };
+
+        this.datatypes = Object.assign([], access("data")) ;
+    });
+
     this.clickEventsubscription = this.loadTableObjecteGUI.getClickEvent().subscribe(()=>{
         this.showWin(this.loadTableObjecteGUI.getObjectnData());
       })
     };
- 
+    
    showWin(data:any) {
     this.isVisible = true;
 
