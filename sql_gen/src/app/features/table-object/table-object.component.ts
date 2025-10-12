@@ -12,6 +12,7 @@ import { SelectModule } from 'primeng/select';
 import { TableObjectDatatypeInterface } from './table-object-datatype.interface';
 import { TableObjectDatatypeService } from './table-object-datatype.service';
 import { ResponseService } from '../../core/response/response.service';
+import { WorkflowService } from '../../core/workflow/workflow.service';
 
 @Component({
   selector: 'p-table-object-component',
@@ -30,22 +31,25 @@ import { ResponseService } from '../../core/response/response.service';
 })
 
 export class TableObjectComponent {
-  tableobject!:TableObjectInterface;
+  payload:TableObjectInterface = {
+    tools_object_tables_pkey:0, tools_version_fkey:0, 
+    tools_objects_fkey:0, fieldname: "",
+    tools_objects_tables_datatypes_fkey:0, length:0,
+    scale:0, active:0, visible:0
+};
   clickEventsubscription!:Subscription;
   isVisible: boolean = false;
-  fieldname: string = "";
-  length: number = 0;
-  scale: number = 0;
-  active:boolean = false;
-  visible: boolean = false;
+  isLengthVisible: boolean = true;
+  isScaleVisible: boolean = true;
   tools_objects_tables_datatypes_pkey: number = 0;
   datatypes: TableObjectDatatypeInterface[] = [];
 
   constructor(
     private loadTableObjecteGUI:TableObjectService,
     private tableobjectdatatypeservice:TableObjectDatatypeService,
-    private responseservice: ResponseService 
-  ){}
+    private responseservice: ResponseService,
+        private workflowservice: WorkflowService 
+  ){ }
     
    ngOnInit() {
     this.tableobjectdatatypeservice.load_table_objects_datatypes().subscribe((response) => {
@@ -62,24 +66,42 @@ export class TableObjectComponent {
       })
     };
     
-   showWin(data:any) {
+   showWin(node:any) {
     this.isVisible = true;
-
-    let keyarr = data.id.split('-') ;
-    let key = keyarr[0];
-    let type = keyarr[1]; 
-
+    this.payload.tools_objects_fkey = node.data.tools_objects_pkey;
+    this.payload.tools_version_fkey = node.data.tools_version_fkey;
   }
 
   hideWin() {
      this.isVisible = false;
   }
   
-  saveTableObject() {
+  saveTableObject(tools_objects_tables_datatypes_pkey:number) {
+    this.payload.tools_objects_tables_datatypes_fkey = tools_objects_tables_datatypes_pkey;
 
+    this.workflowservice.callWorkflow(
+        'tools', 'save_new_table_object', this.payload
+    );
+
+    this.isVisible = false;
   }
 
-  setupGUI(tools_object_tables_pkey: number) {
-
+  setupGUI(tools_objects_tables_datatypes_pkey: number) {
+    let result = this.datatypes.find(
+      datatype => datatype.tools_objects_tables_datatypes_pkey === tools_objects_tables_datatypes_pkey
+    );
+    if (result !== undefined){
+      if(result.length === 1){
+        this.isLengthVisible = true;
+      } else {
+        this.isLengthVisible = false;
+      }
+      if(result.scale === 1){
+        this.isScaleVisible = true;
+      } else {
+        this.isScaleVisible = false;
+      }
+    }
   }
+  
 }

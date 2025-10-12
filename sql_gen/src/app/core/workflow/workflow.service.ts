@@ -1,7 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpRequest, HttpHandler, HttpEvent, HttpParams } from '@angular/common/http';
 import { LocalStorageService } from '../localstorage/local-storage.service';
-import { WorkflowIdentificationData } from './workflow.interface';
+import { ResponseService } from '../../core/response/response.service';
+import { WorkflowPayloadInterface,  WorkflowInterface, WorkflowIdentificationData} from './workflow.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class WorkflowService {
     private connector_data: WorkflowIdentificationData = {connector:"", connector_pkey:0, workflow_pkey:0};
 
     constructor(
-      private  localstorage: LocalStorageService
+      private  localstorage: LocalStorageService,
+      private responseservice: ResponseService 
     ) {}  
 
     private http = inject(HttpClient);
@@ -37,6 +39,32 @@ export class WorkflowService {
         return this.connector_data;
       }
 
-    //this.data.push(newData);
+       callWorkflow(
+              workflow:string, 
+              activity:string, 
+              payload:any
+          ) 
+        {
+            
+            let workflowparams: WorkflowInterface = {
+                workflow: workflow,
+                activity: activity,
+                connector_data: this.connector_data,
+            }
+    
+            let workflowdata: WorkflowPayloadInterface = {
+                workflow: workflowparams,
+                payload: payload,
+    
+            };
+    
+            this.execute(workflowdata).subscribe(response => {
+                this.responseservice.sendResponse(response)
+                console.log(response);
+            });
+    
+            return 1;
+        }
+      
 }
 

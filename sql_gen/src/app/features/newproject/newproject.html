@@ -4,11 +4,11 @@
         <span class="p-text-secondary block mb-8">Add a new project.</span>
         <div class="flex items-center gap-4 mb-4">
             <label for="project" class="font-semibold w-24">Project</label>
-            <input pInputText id="project" class="flex-auto" [(ngModel)]="project" autocomplete="off" />
+            <input pInputText id="project" class="flex-auto" [(ngModel)]="payload.name" autocomplete="off" />
         </div>
         <div class="flex items-center gap-8 mb-8">
             <label for="state" class="font-semibold w-24">State</label>
-            <input pInputText id="state" class="flex-auto" [(ngModel)]="state" autocomplete="off" />
+            <input pInputText id="state" class="flex-auto" [(ngModel)]="payload.state" autocomplete="off" />
         </div>
         <div class="flex justify-end gap-2">
             <p-button label="Cancel" severity="secondary" (click)="visible = false" />

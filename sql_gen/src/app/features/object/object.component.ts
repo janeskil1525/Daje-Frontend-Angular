@@ -10,9 +10,6 @@ import { ObjectGuiService } from './object.gui.service';
 import { Subscription } from 'rxjs';
 import { ObjectInterface } from './object.interface';
 import { WorkflowService } from '../../core/workflow/workflow.service';
-import { WorkflowPayload } from '../../core/workflow/workflow.payload';
-import { WorkflowPayloadInterface } from '../../core/workflow/workflow.interface';
-import { ResponseService } from '../../core/response/response.service'
 
 @Component({
   selector: 'p-object-component',
@@ -35,11 +32,14 @@ export class ObjectComponent {
   isVisible: boolean = false;
   tablename: string ="";
   loadObjectGUISub!:Subscription;
+  payload: ObjectInterface = {
+    name:"", active:true,type:"", 
+    tools_version_fkey:0, tools_objects_pkey:0
+  };
 
   constructor(
     private loadObjectGUI: ObjectGuiService, 
-    private workflowservice: WorkflowService,
-    private responseservice: ResponseService 
+    private workflowservice: WorkflowService
   ) {}
 
   ngOnInit() {
@@ -49,28 +49,14 @@ export class ObjectComponent {
     }
 
   saveObject() {
-    let load: WorkflowPayload;
-    let workflowdata: WorkflowPayloadInterface;
+  
+    this.payload.tools_version_fkey = this.loadObjectGUI.getVersionData().id.split("-")[0];;
+    this.payload.type = 'table',
 
-    load = new WorkflowPayload();
-    let tools_version_fkey = this.loadObjectGUI.getVersionData().id.split("-")[0];
-    let payload: ObjectInterface = {
-        name: this.tablename,
-        active: true,
-        type:'table',
-        tools_version_fkey: tools_version_fkey,
-        tools_objects_pkey:0
-
-    }
-    
-    workflowdata = load.builCall(
-        'tools', 'save_new_object', payload, this.workflowservice.getConnectorData()
+    this.workflowservice.callWorkflow(
+        'tools', 'save_new_object', this.payload
     );
 
-    this.workflowservice.execute(workflowdata).subscribe(response => {
-        this.responseservice.sendResponse(response)
-        console.log(response);
-    });
     this.isVisible = false;
   }
 

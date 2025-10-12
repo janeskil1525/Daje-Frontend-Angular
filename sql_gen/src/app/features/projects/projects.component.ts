@@ -45,7 +45,6 @@ export class ProjectsComponent {
     loadTreeList(tools_projects_pkey: number) {
       let result = this.projects.find(project => project.tools_projects_pkey === tools_projects_pkey);
       this.workflowservice.setConnectorData('tools_projects', result!.tools_projects_pkey, result!.workflow_fkey)
-      this.projects=this.projects;
       this.loadTreeListService.sendClickEvent(tools_projects_pkey);
     };
 

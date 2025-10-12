@@ -3,12 +3,8 @@ import { Dialog } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { WorkflowService } from '../../core/workflow/workflow.service';
-import { WorkflowPayload } from '../../core/workflow/workflow.payload';
-import { WorkflowPayloadInterface } from '../../core/workflow/workflow.interface';
-
 import { FormsModule } from '@angular/forms';
 import { NewprojectInterface } from './newproject.interface';
-import { ResponseService } from '../../core/response/response.service'
 
 @Component({
     selector: 'p-newproject-dialog',
@@ -19,9 +15,10 @@ import { ResponseService } from '../../core/response/response.service'
 
 export class NewProjectComponent {
     visible: boolean = false;
+    payload: NewprojectInterface = {name:"", state:""}
+
     constructor( 
-        private workflowservice: WorkflowService, 
-        private responseservice: ResponseService 
+        private workflowservice: WorkflowService
     ) {}  
     
     project: string = '';
@@ -32,24 +29,9 @@ export class NewProjectComponent {
     }
 
     saveProject() {    
-        let load: WorkflowPayload;
-        let workflowdata: WorkflowPayloadInterface;
 
-        load = new WorkflowPayload();
-
-        let payload: NewprojectInterface = {
-            name: this.project,
-            state: this.state,
-        }
-        
-        workflowdata = load.builCall(
-            'tools', 'save_new_project', payload, this.workflowservice.getConnectorData()
-        );
-
-        this.workflowservice.execute(workflowdata).subscribe(response => {
-            this.responseservice.sendResponse(response);
-            console.log(response);
-        });
+        this.workflowservice.callWorkflow('tools', 'save_new_project', this.payload)
+    
         this.visible = false;
     }
 }
