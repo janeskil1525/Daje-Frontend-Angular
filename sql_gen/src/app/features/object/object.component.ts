@@ -34,7 +34,8 @@ export class ObjectComponent {
   loadObjectGUISub!:Subscription;
   payload: ObjectInterface = {
     name:"", active:true,type:"", 
-    tools_version_fkey:0, tools_objects_pkey:0
+    tools_version_fkey:0, tools_objects_pkey:0, 
+    editnum:1, insby:"", insdatetime:"", modby:"", moddatetime:""
   };
 
   constructor(

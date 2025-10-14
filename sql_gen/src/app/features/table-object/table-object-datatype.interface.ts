@@ -1,11 +1,8 @@
-export interface TableObjectDatatypeInterface {
+import{ ResponseBase } from '../../core/response/response.interface';
+
+export interface TableObjectDatatypeInterface extends ResponseBase {
 
     tools_objects_tables_datatypes_pkey: number,
-    editnum: number,
-    insby: string,
-    insdatetime: string,
-    modby: string,
-    moddatetime: string,
     name: string,
     length: number,
     scale: number

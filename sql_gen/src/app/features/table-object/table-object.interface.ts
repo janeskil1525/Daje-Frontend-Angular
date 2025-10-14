@@ -1,4 +1,6 @@
-export interface TableObjectInterface {
+import{ ResponseBase } from '../../core/response/response.interface';
+
+export interface TableObjectInterface extends ResponseBase {
 
     tools_object_tables_pkey:number,
     tools_version_fkey: number,

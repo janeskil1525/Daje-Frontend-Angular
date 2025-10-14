@@ -35,7 +35,8 @@ export class TableObjectComponent {
     tools_object_tables_pkey:0, tools_version_fkey:0, 
     tools_objects_fkey:0, fieldname: "",
     tools_objects_tables_datatypes_fkey:0, length:0,
-    scale:0, active:0, visible:0
+    scale:0, active:0, visible:0,
+    editnum:1, insby:"", insdatetime:"", modby:"", moddatetime:""
 };
   clickEventsubscription!:Subscription;
   isVisible: boolean = false;
@@ -58,7 +59,7 @@ export class TableObjectComponent {
           return response[key as keyof typeof response];
         };
 
-        this.datatypes = Object.assign([], access("data")) ;
+        this.datatypes  = <TableObjectDatatypeInterface[]> Object.assign([], access("data")) ;
     });
 
     this.clickEventsubscription = this.loadTableObjecteGUI.getClickEvent().subscribe(()=>{
