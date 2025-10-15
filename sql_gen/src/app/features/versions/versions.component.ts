@@ -10,7 +10,7 @@ import { VersionsGuiService } from '../versions/versions.gui.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'p-versions.component',
+  selector: 'p-versions-component',
   imports: [
     FormsModule, 
     InputTextModule, 
