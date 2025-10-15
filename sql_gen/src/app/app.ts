@@ -14,12 +14,14 @@ import { DividerModule } from 'primeng/divider';
 import { ObjectComponent } from './features/object/object.component';
 import { ResponseComponent } from './core/response/response.component';
 import { TableObjectComponent } from './features/table-object/table-object.component';
+import { VersionsComponent } from './features/versions/versions.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.css',
-  imports: [TreelistComponent, 
+  imports: [
+    TreelistComponent, 
     SelectModule, 
     FormsModule, 
     TreeModule, 
@@ -32,7 +34,8 @@ import { TableObjectComponent } from './features/table-object/table-object.compo
     DividerModule,
     ObjectComponent,
     ResponseComponent,
-    TableObjectComponent
+    TableObjectComponent,
+    VersionsComponent
   ],
 
   standalone: true

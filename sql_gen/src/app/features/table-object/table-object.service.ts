@@ -21,4 +21,14 @@ export class TableObjectService {
       'X-Token-Check': this.localkey
     }});
   }
+
+  load_table_object(tools_object_tables_pkey: number) {
+    this.localkey = this.localstorage.getItem('X-Token-Check')!;
+    return this.http.get(`http://localhost/tools/api/v1/table/object/` + tools_object_tables_pkey, 
+        { headers:{
+      'X-Token-Check': this.localkey
+    }});
+  }
+
+
 }

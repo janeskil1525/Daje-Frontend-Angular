@@ -11,7 +11,7 @@ import { ObjectGuiService } from '../object/object.gui.service';
 import { ResponseService } from '../../core/response/response.service';
 import { ResponseInterface } from '../../core/response/response.interface';
 import { TableObjectService } from '../table-object/table-object.gui.service';
-
+import { VersionsGuiService } from '../versions/versions.gui.service';
 
 @Component({
   selector: 'p-object-treelist',
@@ -36,7 +36,8 @@ export class TreelistComponent{
     private loadTreeListService: TreelistLoadService,
     private loadObjecteGUI: ObjectGuiService,
     private responseservice: ResponseService ,
-    private loadTableObjecteGUI: TableObjectService
+    private loadTableObjecteGUI: TableObjectService,
+    private versionsGUI: VersionsGuiService,
   ) {};
 
     ngOnInit() {
@@ -50,6 +51,8 @@ export class TreelistComponent{
   nodeSelect(event:any) {
     let type = this.getType(event.node);
     if (type === "tools_version") {
+        this.versionsGUI.sendClickEvent(event.node);
+
         this.items = [
           {label:'Table', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}, 
           {label:'Index', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}, 
