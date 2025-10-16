@@ -8,6 +8,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { VersionsInterface } from './versions.interface';
 import { VersionsGuiService } from '../versions/versions.gui.service';
 import { Subscription } from 'rxjs';
+import { VersionsService } from './versions.service';
+import { ResponseService } from '../../core/response/response.service';
 
 @Component({
   selector: 'p-versions-component',
@@ -33,15 +35,28 @@ export class VersionsComponent {
 
   clickEventsubscription:Subscription;
 
-  constructor(private versionsGUI: VersionsGuiService) {
-    this.clickEventsubscription = this.versionsGUI.getClickEvent().subscribe((payload)=>{
-      this.showWin(payload);
-    })
-
+  constructor(
+    private versionsGUI: VersionsGuiService, 
+    private versionsservice: VersionsService,
+    private responseservice: ResponseService 
+  ) {
+      this.clickEventsubscription = this.versionsGUI.getClickEvent().subscribe((tools_version_pkey)=>{
+        this.showWin(tools_version_pkey);
+      })
   };
 
-  showWin(payload: VersionsInterface) {    
+  showWin(tools_version_pkey: any) {    
     this.isVisible = true;
-    this.payload = payload;
+
+    this.versionsservice.load_version(tools_version_pkey).subscribe((response)=> {
+        this.responseservice.sendResponse(response);
+        let access = (key: string) => {
+          return response[key as keyof typeof response];
+        };
+
+        this.payload = Object.assign([], access("data")) ;
+    })
+    
+
   }
 }

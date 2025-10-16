@@ -4,18 +4,18 @@
             <div class="flex gap-4 mt-1 p-3">
                 <p-floatlabel variant="on">
                     <input pInputText id="name" [(ngModel)]="payload.name" autocomplete="off" />
-                    <label for="fieldname">Field name</label>
+                    <label for="fieldname">Name</label>
                 </p-floatlabel>
             </div>
             <div class="flex gap-4 mt-1 p-3">
                 <p-floatlabel variant="on">
-                    <input pInputText id="length" [(ngModel)]="payload.version" autocomplete="off" />
-                    <label for="length">Length</label>
+                    <input pInputText id="version" [(ngModel)]="payload.version" autocomplete="off" />
+                    <label for="version">Version</label>
                 </p-floatlabel>
             </div>
             <div class="flex gap-4 mt-1 p-3">       
-                <p-checkbox inputId="active" name="active" value="true" [(ngModel)]="payload.locked" />
-                <label for="active" class="ml-2"> Active </label>                  
+                <p-checkbox inputId="active" name="locked" value="true" [(ngModel)]="payload.locked" />
+                <label for="locked" class="ml-2">Locked</label>                  
             </div>
         </p-card>
     </div>

@@ -51,7 +51,9 @@ export class TreelistComponent{
   nodeSelect(event:any) {
     let type = this.getType(event.node);
     if (type === "tools_version") {
-        this.versionsGUI.sendClickEvent(event.node);
+        this.versionsGUI.sendClickEvent(
+          event.node.data.tools_version_pkey
+        );
 
         this.items = [
           {label:'Table', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}, 
