@@ -8,6 +8,7 @@ import { Observable, Subject } from 'rxjs';
 export class ObjectGuiService {
   private subject = new Subject<any>();
   private versionData: any;
+  isVisible:boolean = true;
 
   getVersionData() {
     return this.versionData
@@ -20,5 +21,13 @@ export class ObjectGuiService {
 
   getClickEvent(): Observable<any>{ 
     return this.subject.asObservable();
+  }
+
+  setVisibility(visible:boolean = true) {
+    this.isVisible = visible;
+  }
+
+  getVisibility() {
+    return this.isVisible;
   }
 }

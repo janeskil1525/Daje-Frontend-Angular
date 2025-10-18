@@ -5,10 +5,10 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class TableObjectService {
-  private subject = new Subject<any>();
-  
+  private subject = new Subject<any>();  
   private objectData: any;
-
+  isVisible:boolean = true;
+  
   getObjectnData() {
     return this.objectData
   }
@@ -20,5 +20,13 @@ export class TableObjectService {
 
   getClickEvent(): Observable<any>{ 
     return this.subject.asObservable();
+  }
+
+  setVisibility(visible:boolean = true) {
+    this.isVisible = visible;
+  }
+
+  getVisibility() {
+    return this.isVisible;
   }
 }

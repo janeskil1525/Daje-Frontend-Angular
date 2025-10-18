@@ -13,10 +13,9 @@ export class ObjectService {
 
   constructor(private localstorage: LocalStorageService) {}
 
-  getRecord(tools_objects_pkey:number): Observable<ResponseInterface[]> {
+  load_object(tools_objects_pkey:number): Observable<ResponseInterface> {
       this.localkey = this.localstorage.getItem('X-Token-Check')!;
-  
-      return this.http.get<ResponseInterface[]>('http://localhost/tools/api/v1/object' + tools_objects_pkey,{
+      return this.http.get <ResponseInterface> ('http://localhost/tools/api/v1/object/' + tools_objects_pkey,{
         headers:{
           'X-Token-Check': this.localkey
           //''

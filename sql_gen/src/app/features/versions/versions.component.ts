@@ -27,11 +27,7 @@ import { ResponseService } from '../../core/response/response.service';
 
 export class VersionsComponent {
   isVisible:boolean = false;
-  payload: VersionsInterface = {
-   tools_version_pkey:0, tools_projects_fkey:0, 
-   version:0, name:"", locked:false, workflow_fkey:0,
-   editnum:1, insby:"", insdatetime:"", modby:"", moddatetime:""
-  }
+  payload: VersionsInterface = this.initialInterface();
 
   clickEventsubscription:Subscription;
 
@@ -46,17 +42,26 @@ export class VersionsComponent {
   };
 
   showWin(tools_version_pkey: any) {    
-    this.isVisible = true;
+    if(this.versionsGUI.getVisibility() === true) {
+      this.isVisible = true;
+      this.versionsservice.load_version(tools_version_pkey).subscribe((response)=> {
+          this.responseservice.sendResponse(response);
+          let access = (key: string) => {
+            return response[key as keyof typeof response];
+          };
+          this.payload = Object.assign([], access("data")) ;
+      })
+    } else {
+      this.isVisible = false;
+      this.payload = this.initialInterface();
+    }
+  }
 
-    this.versionsservice.load_version(tools_version_pkey).subscribe((response)=> {
-        this.responseservice.sendResponse(response);
-        let access = (key: string) => {
-          return response[key as keyof typeof response];
-        };
-
-        this.payload = Object.assign([], access("data")) ;
-    })
-    
-
+  initialInterface() {
+    return {
+    tools_version_pkey:0, tools_projects_fkey:0, 
+    version:0, name:"", locked:false, workflow_fkey:0,
+    editnum:1, insby:"", insdatetime:"", modby:"", moddatetime:""
+    }
   }
 }

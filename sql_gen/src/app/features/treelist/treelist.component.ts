@@ -34,9 +34,9 @@ export class TreelistComponent{
    constructor(
     private treelistservice: TreelistService, 
     private loadTreeListService: TreelistLoadService,
-    private loadObjecteGUI: ObjectGuiService,
+    private objecteGUI: ObjectGuiService,
     private responseservice: ResponseService ,
-    private loadTableObjecteGUI: TableObjectService,
+    private tableObjecteGUI: TableObjectService,
     private versionsGUI: VersionsGuiService,
   ) {};
 
@@ -51,6 +51,7 @@ export class TreelistComponent{
   nodeSelect(event:any) {
     let type = this.getType(event.node);
     if (type === "tools_version") {
+        this.versionsGUI.setVisibility(true);
         this.versionsGUI.sendClickEvent(
           event.node.data.tools_version_pkey
         );
@@ -61,18 +62,33 @@ export class TreelistComponent{
           {label:'SQL', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}
         ];
     } else if ( type === "tools_objects") {
+      this.versionsGUI.setVisibility(false);
+      this.versionsGUI.sendClickEvent(0);
       this.items = [
           {label:'New Table Object', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}
         ];
+      this.versionsGUI.setVisibility(true);
+      this.objecteGUI.sendClickEvent(
+        event.node.data.tools_objects_pkey
+      )
+    } else if ( type === 'tools_object_tables') {
+      this.versionsGUI.setVisibility(false);
+      this.versionsGUI.sendClickEvent(0);
+      this.objecteGUI.setVisibility(false);
+      this.objecteGUI.sendClickEvent(0);
+      
+      this.tableObjecteGUI.sendClickEvent(event.node);
     }
   }
 
   addItem(node: any) {
     let type = this.getType(node);
     if (type === "tools_version") {
-      this.loadObjecteGUI.sendClickEvent(node);
+      this.versionsGUI.setVisibility(false);
+      this.versionsGUI.sendClickEvent(0);
+      this.objecteGUI.sendClickEvent(node);
     } else if ( type === "tools_objects") {
-      this.loadTableObjecteGUI.sendClickEvent(node);
+      this.tableObjecteGUI.sendClickEvent(node);
     }
 
   }

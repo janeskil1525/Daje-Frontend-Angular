@@ -10,6 +10,8 @@ import { ObjectGuiService } from './object.gui.service';
 import { Subscription } from 'rxjs';
 import { ObjectInterface } from './object.interface';
 import { WorkflowService } from '../../core/workflow/workflow.service';
+import { ObjectService } from './object.service';
+import { ResponseService } from '../../core/response/response.service';
 
 @Component({
   selector: 'p-object-component',
@@ -32,26 +34,24 @@ export class ObjectComponent {
   isVisible: boolean = false;
   tablename: string ="";
   loadObjectGUISub!:Subscription;
-  payload: ObjectInterface = {
-    name:"", active:true,type:"", 
-    tools_version_fkey:0, tools_objects_pkey:0, 
-    editnum:1, insby:"", insdatetime:"", modby:"", moddatetime:""
-  };
+  payload: ObjectInterface = this.initialInterface();
 
   constructor(
-    private loadObjectGUI: ObjectGuiService, 
-    private workflowservice: WorkflowService
+    private objectGUI: ObjectGuiService, 
+    private workflowservice: WorkflowService,
+    private responseservice: ResponseService,
+    private objectservice: ObjectService
   ) {}
 
   ngOnInit() {
-        this.loadObjectGUISub = this.loadObjectGUI.getClickEvent().subscribe(()=>{
-          this.showWin(this.loadObjectGUI.getVersionData())
+        this.loadObjectGUISub = this.objectGUI.getClickEvent().subscribe(()=>{
+          this.showWin(this.objectGUI.getVersionData())
       });
     }
 
   saveObject() {
   
-    this.payload.tools_version_fkey = this.loadObjectGUI.getVersionData().id.split("-")[0];;
+    this.payload.tools_version_fkey = this.objectGUI.getVersionData().id.split("-")[0];;
     this.payload.type = 'table',
 
     this.workflowservice.callWorkflow(
@@ -61,16 +61,33 @@ export class ObjectComponent {
     this.isVisible = false;
   }
 
-  showWin(data:any) {
-    this.isVisible = true;
+  showWin(tools_object_pkey:number) {
+    if(this.objectGUI.getVisibility() === true) {
+      this.isVisible = true;
+      this.objectservice.load_object(tools_object_pkey).subscribe((response)=> {
+          this.responseservice.sendResponse(response);
+          let access = (key: string) => {
+            return response[key as keyof typeof response];
+          };
+          this.payload = Object.assign({}, access("data")) ;
+      })
+    } else {
+      this.isVisible = false;
+      this.payload = this.initialInterface();
+    }
 
-    let keyarr = data.id.split('-') ;
-    let key = keyarr[0];
-    let type = keyarr[2]; 
 
   }
   
   hideWin() {
      this.isVisible = false;
+  }
+
+  initialInterface(){
+    return {
+      name:"", active:true,type:"", 
+      tools_version_fkey:0, tools_objects_pkey:0, 
+      editnum:1, insby:"", insdatetime:"", modby:"", moddatetime:""
+    };
   }
 }
