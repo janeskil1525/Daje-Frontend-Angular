@@ -51,6 +51,7 @@ export class TreelistComponent{
   nodeSelect(event:any) {
     let type = this.getType(event.node);
     if (type === "tools_version") {
+        this.tableObjecteGUI.sendClickEvent(0, false);;
         this.versionsGUI.setVisibility(true);
         this.versionsGUI.sendClickEvent(
           event.node.data.tools_version_pkey
@@ -76,8 +77,8 @@ export class TreelistComponent{
       this.versionsGUI.sendClickEvent(0);
       this.objecteGUI.setVisibility(false);
       this.objecteGUI.sendClickEvent(0);
-      
-      this.tableObjecteGUI.sendClickEvent(event.node);
+
+      this.tableObjecteGUI.sendClickEvent(event.node.data.tools_object_tables_pkey, true);
     }
   }
 
@@ -86,9 +87,15 @@ export class TreelistComponent{
     if (type === "tools_version") {
       this.versionsGUI.setVisibility(false);
       this.versionsGUI.sendClickEvent(0);
+      this.tableObjecteGUI.setVisibility(false);
+      this.tableObjecteGUI.sendClickEvent(0, false);
       this.objecteGUI.sendClickEvent(node);
     } else if ( type === "tools_objects") {
-      this.tableObjecteGUI.sendClickEvent(node);
+      this.versionsGUI.setVisibility(false);
+      this.versionsGUI.sendClickEvent(0);
+      this.objecteGUI.setVisibility(false);
+      this.objecteGUI.sendClickEvent(0);
+      this.tableObjecteGUI.sendClickEvent(0, true, node);
     }
 
   }

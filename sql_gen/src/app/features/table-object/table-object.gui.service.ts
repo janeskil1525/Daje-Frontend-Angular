@@ -6,16 +6,21 @@ import { Observable, Subject } from 'rxjs';
 })
 export class TableObjectService {
   private subject = new Subject<any>();  
-  private objectData: any;
+  private node: any;
   isVisible:boolean = true;
-  
-  getObjectnData() {
-    return this.objectData
+
+  getObjectData() {
+    return this.node
   }
 
-  sendClickEvent(data:any) {
-    this.objectData = data;
-    this.subject.next(data);
+  setObjectData(node: any) {
+    this.node = node;
+  }
+
+  sendClickEvent(tools_object_tables_pkey:number, visibility: boolean, node: any = {}) {
+    this.setVisibility(visibility);
+    this.node = node;
+    this.subject.next(tools_object_tables_pkey);
   }
 
   getClickEvent(): Observable<any>{ 

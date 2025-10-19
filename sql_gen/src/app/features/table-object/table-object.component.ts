@@ -46,7 +46,7 @@ export class TableObjectComponent {
   datatypes: TableObjectDatatypeInterface[] = [];
 
   constructor(
-    private loadTableObjecteGUI:TableObjectService,
+    private tableObjecteGUI:TableObjectService,
     private tableobjectdatatypeservice:TableObjectDatatypeService,
     private responseservice: ResponseService,
         private workflowservice: WorkflowService 
@@ -62,15 +62,18 @@ export class TableObjectComponent {
         this.datatypes  = <TableObjectDatatypeInterface[]> Object.assign([], access("data")) ;
     });
 
-    this.clickEventsubscription = this.loadTableObjecteGUI.getClickEvent().subscribe(()=>{
-        this.showWin(this.loadTableObjecteGUI.getObjectnData());
+    this.clickEventsubscription = this.tableObjecteGUI.getClickEvent().subscribe((tools_object_tables_pkey)=>{
+        this.showWin(tools_object_tables_pkey);
       })
     };
     
-   showWin(node:any) {
-    this.isVisible = true;
-    this.payload.tools_objects_fkey = node.data.tools_objects_pkey;
-    this.payload.tools_version_fkey = node.data.tools_version_fkey;
+   showWin(tools_object_tables_pkey:number) {
+    this.isVisible = this.tableObjecteGUI.getVisibility();
+    if(tools_object_tables_pkey === 0 && this.isVisible === true) {
+      let node = this.tableObjecteGUI.getObjectData();
+      this.payload.tools_objects_fkey = node.data.tools_objects_pkey;
+      this.payload.tools_version_fkey = node.data.tools_version_fkey;
+    }
   }
 
   hideWin() {
