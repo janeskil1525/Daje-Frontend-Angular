@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class TableObjectService {
+export class TableObjectGUIService {
   private subject = new Subject<any>();  
   private node: any;
   isVisible:boolean = true;
