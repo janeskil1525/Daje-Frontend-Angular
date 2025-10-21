@@ -9,6 +9,6 @@ export interface TableObjectInterface extends ResponseBase {
     tools_objects_tables_datatypes_fkey: number,
     length: number,
     scale: number,
-    active: number,
-    visible: number,
+    active: boolean,
+    visible: boolean,
 }

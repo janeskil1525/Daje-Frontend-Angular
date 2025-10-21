@@ -9,7 +9,7 @@
                 </p-floatlabel>
             </div>
             <div class="flex gap-4 mt-1 p-3">
-                <p-checkbox inputId="active" name="active" value="true" [(ngModel)]="payload.active" />
+                <p-checkbox inputId="active" name="active" value="true" [(ngModel)]="payload.active" [binary]="true"/>
                 <label for="active" class="ml-2"> Active </label>                  
             </div>
             <ng-template #footer>

@@ -10,7 +10,7 @@ import { BadgeModule } from 'primeng/badge';
 import { ObjectGuiService } from '../object/object.gui.service';
 import { ResponseService } from '../../core/response/response.service';
 import { ResponseInterface } from '../../core/response/response.interface';
-import { TableObjectService } from '../table-object/table-object.gui.service';
+import { TableObjectGUIService } from '../table-object/table-object.gui.service';
 import { VersionsGuiService } from '../versions/versions.gui.service';
 
 @Component({
@@ -36,7 +36,7 @@ export class TreelistComponent{
     private loadTreeListService: TreelistLoadService,
     private objecteGUI: ObjectGuiService,
     private responseservice: ResponseService ,
-    private tableObjecteGUI: TableObjectService,
+    private tableObjecteGUI: TableObjectGUIService,
     private versionsGUI: VersionsGuiService,
   ) {};
 
@@ -51,10 +51,10 @@ export class TreelistComponent{
   nodeSelect(event:any) {
     let type = this.getType(event.node);
     if (type === "tools_version") {
-        this.tableObjecteGUI.sendClickEvent(0, false);;
-        this.versionsGUI.setVisibility(true);
+        this.tableObjecteGUI.sendClickEvent(0, false);
+        this.objecteGUI.sendClickEvent(0,false);
         this.versionsGUI.sendClickEvent(
-          event.node.data.tools_version_pkey
+          event.node.data.tools_version_pkey, true
         );
 
         this.items = [
@@ -63,38 +63,34 @@ export class TreelistComponent{
           {label:'SQL', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}
         ];
     } else if ( type === "tools_objects") {
-      this.versionsGUI.setVisibility(false);
-      this.versionsGUI.sendClickEvent(0);
+      this.tableObjecteGUI.sendClickEvent(0, false);
+      this.versionsGUI.sendClickEvent(0, false);
       this.items = [
           {label:'New Table Object', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}
         ];
-      this.versionsGUI.setVisibility(true);
       this.objecteGUI.sendClickEvent(
-        event.node.data.tools_objects_pkey
+        event.node.data.tools_objects_pkey, true
       )
     } else if ( type === 'tools_object_tables') {
-      this.versionsGUI.setVisibility(false);
-      this.versionsGUI.sendClickEvent(0);
-      this.objecteGUI.setVisibility(false);
-      this.objecteGUI.sendClickEvent(0);
-
+      this.versionsGUI.sendClickEvent(0, false);
+      this.objecteGUI.sendClickEvent(0,false);
       this.tableObjecteGUI.sendClickEvent(event.node.data.tools_object_tables_pkey, true);
+    } else if ( type === 'tools_object_index') {
+      this.versionsGUI.sendClickEvent(0, false);
+      this.objecteGUI.sendClickEvent(0,false);
+      this.tableObjecteGUI.sendClickEvent(0, false);
     }
   }
 
   addItem(node: any) {
     let type = this.getType(node);
     if (type === "tools_version") {
-      this.versionsGUI.setVisibility(false);
-      this.versionsGUI.sendClickEvent(0);
-      this.tableObjecteGUI.setVisibility(false);
+      this.versionsGUI.sendClickEvent(0, false);
       this.tableObjecteGUI.sendClickEvent(0, false);
-      this.objecteGUI.sendClickEvent(node);
+      this.objecteGUI.sendClickEvent(0,true);
     } else if ( type === "tools_objects") {
-      this.versionsGUI.setVisibility(false);
-      this.versionsGUI.sendClickEvent(0);
-      this.objecteGUI.setVisibility(false);
-      this.objecteGUI.sendClickEvent(0);
+      this.versionsGUI.sendClickEvent(0,false);
+      this.objecteGUI.sendClickEvent(0,false);
       this.tableObjecteGUI.sendClickEvent(0, true, node);
     }
 

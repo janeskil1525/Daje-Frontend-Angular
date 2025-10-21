@@ -50,6 +50,7 @@ export class VersionsComponent {
             return response[key as keyof typeof response];
           };
           this.payload = Object.assign([], access("data")) ;
+          if(this.payload.locked) this.payload.locked = true;
       })
     } else {
       this.isVisible = false;

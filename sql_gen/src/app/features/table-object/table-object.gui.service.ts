@@ -1,9 +1,10 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class TableObjectGUIService {
   private subject = new Subject<any>();  
   private node: any;

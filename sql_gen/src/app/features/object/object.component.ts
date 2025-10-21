@@ -44,8 +44,8 @@ export class ObjectComponent {
   ) {}
 
   ngOnInit() {
-        this.loadObjectGUISub = this.objectGUI.getClickEvent().subscribe(()=>{
-          this.showWin(this.objectGUI.getVersionData())
+        this.loadObjectGUISub = this.objectGUI.getClickEvent().subscribe((tools_object_pkey)=>{
+          this.showWin(tools_object_pkey);
       });
     }
 
@@ -70,6 +70,7 @@ export class ObjectComponent {
             return response[key as keyof typeof response];
           };
           this.payload = Object.assign({}, access("data")) ;
+          if(this.payload.active) this.payload.active = true;
       })
     } else {
       this.isVisible = false;

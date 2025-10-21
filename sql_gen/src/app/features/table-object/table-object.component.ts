@@ -32,13 +32,7 @@ import { TableObjectService } from './table-object.service';
 })
 
 export class TableObjectComponent {
-  payload:TableObjectInterface = {
-    tools_object_tables_pkey:0, tools_version_fkey:0, 
-    tools_objects_fkey:0, fieldname: "",
-    tools_objects_tables_datatypes_fkey:0, length:0,
-    scale:0, active:0, visible:0,
-    editnum:1, insby:"", insdatetime:"", modby:"", moddatetime:""
-};
+  payload:TableObjectInterface = this.initialInterface();
   clickEventsubscription!:Subscription;
   isVisible: boolean = false;
   isLengthVisible: boolean = true;
@@ -60,7 +54,6 @@ export class TableObjectComponent {
         let access = (key: string) => {
           return response[key as keyof typeof response];
         };
-
         this.datatypes  = <TableObjectDatatypeInterface[]> Object.assign([], access("data")) ;
     });
 
@@ -70,11 +63,9 @@ export class TableObjectComponent {
     };
     
    showWin(tools_object_tables_pkey:any) {
-    this.isVisible = this.tableObjecteGUI.getVisibility();
+    this.winVisible(this.tableObjecteGUI.getVisibility());
     if(tools_object_tables_pkey === 0 && this.isVisible === true) {
-      let node = this.tableObjecteGUI.getObjectData();
-      this.payload.tools_objects_fkey = node.data.tools_objects_pkey;
-      this.payload.tools_version_fkey = node.data.tools_version_fkey;
+      this.initializeNew();      
     } else if (tools_object_tables_pkey > 0 && this.isVisible === true) {
       // Load table object
       this.tableobjectservice.load_table_object(tools_object_tables_pkey).subscribe((response) => {
@@ -84,13 +75,20 @@ export class TableObjectComponent {
         };
 
         this.payload  = <TableObjectInterface> Object.assign([], access("data")) ;
+        if(this.payload.active) this.payload.active = true;
+        if(this.payload.visible) this.payload.visible = true;
+        this.tools_objects_tables_datatypes_pkey = this.payload.tools_objects_tables_datatypes_fkey        
+        this.setupGUI(this.tools_objects_tables_datatypes_pkey);
       });
     }
 
   }
 
-  hideWin() {
-     this.isVisible = false;
+  winVisible(isVisible:boolean) {
+     this.isVisible = isVisible;
+     if (isVisible === false) {
+      this.payload = this.initialInterface();
+     }
   }
   
   saveTableObject(tools_objects_tables_datatypes_pkey:number) {
@@ -120,5 +118,21 @@ export class TableObjectComponent {
       }
     }
   }
-  
+
+  initializeNew() {
+      this.payload = this.initialInterface();
+      let node = this.tableObjecteGUI.getObjectData();
+      this.payload.tools_objects_fkey = node.data.tools_objects_pkey;
+      this.payload.tools_version_fkey = node.data.tools_version_fkey;
+  }
+
+  initialInterface() {
+    return {
+      tools_object_tables_pkey:0, tools_version_fkey:0, 
+      tools_objects_fkey:0, fieldname: "",
+      tools_objects_tables_datatypes_fkey:0, length:0,
+      scale:0, active:false, visible:false,
+      editnum:1, insby:"", insdatetime:"", modby:"", moddatetime:""
+    };
+  }
 }

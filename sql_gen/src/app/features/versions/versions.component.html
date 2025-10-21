@@ -14,7 +14,7 @@
                 </p-floatlabel>
             </div>
             <div class="flex gap-4 mt-1 p-3">       
-                <p-checkbox inputId="active" name="locked" value="true" [(ngModel)]="payload.locked" />
+                <p-checkbox inputId="active" name="locked" value="true" [(ngModel)]="payload.locked" [binary]="true"/>
                 <label for="locked" class="ml-2">Locked</label>                  
             </div>
         </p-card>

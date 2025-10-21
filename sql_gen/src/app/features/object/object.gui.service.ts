@@ -7,16 +7,17 @@ import { Observable, Subject } from 'rxjs';
 
 export class ObjectGuiService {
   private subject = new Subject<any>();
-  private versionData: any;
+  private node: any;
   isVisible:boolean = true;
 
   getVersionData() {
-    return this.versionData
+    return this.node
   }
 
-  sendClickEvent(data:any) {
-    this.versionData = data;
-    this.subject.next(data);
+  sendClickEvent(tools_objects_pkey:number, visibility:boolean, node:any = {}) {
+    this.setVisibility(visibility);
+    this.node = node;
+    this.subject.next(tools_objects_pkey);
   }
 
   getClickEvent(): Observable<any>{ 

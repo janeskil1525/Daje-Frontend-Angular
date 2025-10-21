@@ -8,20 +8,21 @@
                     <label for="fieldname">Field name</label>
                 </p-floatlabel>
             </div>
-            <p-select 
-                [options]="datatypes" 
-                [(ngModel)]="tools_objects_tables_datatypes_pkey" 
-                [ngModelOptions]="{standalone: true}"
-                placeholder="Select a datatype" 
-                class="w-full md:w-56" 
-                optionLabel="name"
-                animate.enter="enter-animation"
-                optionValue="tools_objects_tables_datatypes_pkey"
-                [checkmark]="true"
-                [filter]="true"
-                (onChange)="setupGUI(tools_objects_tables_datatypes_pkey)"
-            />
-
+             <div class="flex gap-4 mt-1 p-3">
+                <p-select 
+                    [options]="datatypes" 
+                    [(ngModel)]="tools_objects_tables_datatypes_pkey" 
+                    [ngModelOptions]="{standalone: true}"
+                    placeholder="Select a datatype" 
+                    class="w-full md:w-56" 
+                    optionLabel="name"
+                    animate.enter="enter-animation"
+                    optionValue="tools_objects_tables_datatypes_pkey"
+                    [checkmark]="true"
+                    [filter]="true"
+                    (onChange)="setupGUI(tools_objects_tables_datatypes_pkey)"
+                />
+            </div>
             @if (isLengthVisible) {
             <div class="flex gap-4 mt-1 p-3">
                 <p-floatlabel variant="on">
@@ -41,17 +42,17 @@
             }
 
             <div class="flex gap-4 mt-1 p-3">       
-                <p-checkbox inputId="active" name="active" value="true" [(ngModel)]="payload.active" />
+                <p-checkbox inputId="active" name="active" value="true" [(ngModel)]="payload.active" [binary]="true"/>
                 <label for="active" class="ml-2"> Active </label>                  
             </div>
 
             <div class="flex gap-4 mt-1 p-3">
-                <p-checkbox inputId="visible" name="visible" value="true" [(ngModel)]="payload.visible" />
+                <p-checkbox inputId="visible" name="visible" value="true" [(ngModel)]="payload.visible" [binary]="true"/>
                 <label for="visible" class="ml-2"> Visible </label>                  
             </div>
 
             <div class="flex gap-4 mt-1">
-                <p-button (click)="hideWin()" label="Cancel" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full" />
+                <p-button (click)="winVisible(false)" label="Cancel" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full" />
                 <p-button (click)="saveTableObject(tools_objects_tables_datatypes_pkey)"  label="Save" class="w-full" styleClass="w-full" />
             </div>
         </p-card>
