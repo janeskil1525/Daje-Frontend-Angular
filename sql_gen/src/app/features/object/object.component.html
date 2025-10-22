@@ -5,8 +5,23 @@
             <div class="flex gap-4 mt-1 p-3">
                 <p-floatlabel variant="on" >
                     <input pInputText id="tablename" [(ngModel)]="payload.name" autocomplete="off" />
-                    <label for="tablename">Table name</label>
+                    <label for="tablename">Name</label>
                 </p-floatlabel>
+            </div>
+            <div class="flex gap-4 mt-1 p-3">
+                <p-select 
+                    [options]="objecttypes" 
+                    [(ngModel)]="tools_object_types_pkey" 
+                    [ngModelOptions]="{standalone: true}"
+                    placeholder="Select an object type" 
+                    class="w-full md:w-56" 
+                    optionLabel="name"
+                    animate.enter="enter-animation"
+                    optionValue="tools_objects_tables_datatypes_pkey"
+                    [checkmark]="true"
+                    [filter]="true"
+                    (onChange)="setupGUI(tools_object_types_pkey)"
+                />
             </div>
             <div class="flex gap-4 mt-1 p-3">
                 <p-checkbox inputId="active" name="active" value="true" [(ngModel)]="payload.active" [binary]="true"/>

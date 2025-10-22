@@ -8,10 +8,13 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ObjectGuiService } from './object.gui.service';
 import { Subscription } from 'rxjs';
+import { SelectModule } from 'primeng/select';
 import { ObjectInterface } from './object.interface';
 import { WorkflowService } from '../../core/workflow/workflow.service';
 import { ObjectService } from './object.service';
 import { ResponseService } from '../../core/response/response.service';
+import { ObjectTypeInterface } from './object.type.interface';
+import { ObjectTypeService } from './object.type.service';
 
 @Component({
   selector: 'p-object-component',
@@ -23,6 +26,7 @@ import { ResponseService } from '../../core/response/response.service';
     CommonModule, 
     ButtonModule, 
     CheckboxModule,
+    SelectModule,
   ],
   templateUrl: './object.component.html',
   styleUrl: './object.component.css',
@@ -35,16 +39,27 @@ export class ObjectComponent {
   tablename: string ="";
   loadObjectGUISub!:Subscription;
   payload: ObjectInterface = this.initialInterface();
+  objecttypes:ObjectTypeInterface[] = [];
+  tools_object_types_pkey:number = 0;
 
   constructor(
     private objectGUI: ObjectGuiService, 
     private workflowservice: WorkflowService,
     private responseservice: ResponseService,
-    private objectservice: ObjectService
+    private objectservice: ObjectService,
+    private objectypeservice: ObjectTypeService,
   ) {}
 
   ngOnInit() {
-        this.loadObjectGUISub = this.objectGUI.getClickEvent().subscribe((tools_object_pkey)=>{
+      this.objectypeservice.load_objects_types().subscribe((response) => {
+          this.responseservice.sendResponse(response);
+          let access = (key: string) => {
+            return response[key as keyof typeof response];
+          };
+          this.objecttypes  = <ObjectTypeInterface[]> Object.assign([], access("data")) ;
+      });
+
+      this.loadObjectGUISub = this.objectGUI.getClickEvent().subscribe((tools_object_pkey)=>{
           this.showWin(tools_object_pkey);
       });
     }
@@ -77,11 +92,14 @@ export class ObjectComponent {
       this.payload = this.initialInterface();
     }
 
-
   }
   
   hideWin() {
      this.isVisible = false;
+  }
+
+  setupGUI(tools_object_types_pkey:number) {
+
   }
 
   initialInterface(){
