@@ -1,10 +1,7 @@
-export interface ObjectTypeInterface {
+import{ ResponseBase } from '../../core/response/response.interface';
+
+export interface ObjectTypeInterface extends ResponseBase {
     tools_object_types_pkey:number,
-    editnum:number,
-    insby:string,
-    insdatetime:string,
-    modby:string,
-    moddatetime:string,
     name:string,
     type:number,
 }

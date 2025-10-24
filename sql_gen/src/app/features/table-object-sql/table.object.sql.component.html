@@ -1,0 +1,17 @@
+@if (isVisible) {
+    <div class="card flex flex-wrap justify-center items-end gap-4">
+        <p-card [style]="{ width: '25rem', overflow: 'hidden' }">  
+            <div class="flex gap-4 mt-1 p-3">
+                <p-floatlabel variant="on">
+                    <input pInputText id="sql_string" [(ngModel)]="payload.sql_string" autocomplete="off" />
+                    <label for="sql_string">Sql</label>
+                </p-floatlabel>
+            </div>
+
+            <div class="flex gap-4 mt-1">
+                <p-button (click)="winVisible(false)" label="Cancel" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full" />
+                <p-button (click)="saveTableObjectSql()"  label="Save" class="w-full" styleClass="w-full" />
+            </div>
+        </p-card>
+    </div>
+}

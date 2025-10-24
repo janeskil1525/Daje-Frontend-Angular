@@ -95,7 +95,7 @@ export class TableObjectComponent {
     this.payload.tools_objects_tables_datatypes_fkey = tools_objects_tables_datatypes_pkey;
 
     this.workflowservice.callWorkflow(
-        'tools', 'save_new_table_object', this.payload
+        'tools', 'save_new_table_object_index', this.payload
     );
 
     this.isVisible = false;
@@ -110,11 +110,13 @@ export class TableObjectComponent {
         this.isLengthVisible = true;
       } else {
         this.isLengthVisible = false;
+        this.payload.length = 0;
       }
       if(result.scale === 1){
         this.isScaleVisible = true;
       } else {
         this.isScaleVisible = false;
+        this.payload.scale = 0;
       }
     }
   }
