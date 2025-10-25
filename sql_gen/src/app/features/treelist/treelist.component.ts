@@ -12,6 +12,8 @@ import { ResponseService } from '../../core/response/response.service';
 import { ResponseInterface } from '../../core/response/response.interface';
 import { TableObjectGUIService } from '../table-object/table-object.gui.service';
 import { VersionsGuiService } from '../versions/versions.gui.service';
+import { TableObjectIndexGuiService } from '../table-object-index/table.object.index.gui.service';
+import { TableObjectSqlGuiService } from '../table-object-sql/table.object.sql.gui.service';
 
 @Component({
   selector: 'p-object-treelist',
@@ -38,6 +40,8 @@ export class TreelistComponent{
     private responseservice: ResponseService ,
     private tableObjecteGUI: TableObjectGUIService,
     private versionsGUI: VersionsGuiService,
+    private tableobjectindexGUIservice:TableObjectIndexGuiService,
+    private tableobjectsqlGUIservice: TableObjectSqlGuiService
   ) {};
 
     ngOnInit() {
@@ -53,42 +57,56 @@ export class TreelistComponent{
     if (type === "tools_version") {
         this.tableObjecteGUI.sendClickEvent(0, false);
         this.objecteGUI.sendClickEvent(0,false);
+        this.tableobjectindexGUIservice.sendClickEvent(0, false);
         this.versionsGUI.sendClickEvent(
           event.node.data.tools_version_pkey, true
         );
 
         this.items = [
-          {label:'Table', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}, 
-          {label:'Index', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}, 
-          {label:'SQL', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}
+          {label:'Table', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode, 1)}, 
+          {label:'Index', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode, 2)}, 
+          {label:'SQL', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode, 3)}
         ];
-    } else if ( type === "tools_objects") {
+    } else if ( type === "tools_objects1") {
       this.tableObjecteGUI.sendClickEvent(0, false);
       this.versionsGUI.sendClickEvent(0, false);
       this.items = [
-          {label:'New Table Object', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode)}
+          {label:'New Table Object', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode, 0)}
         ];
+      this.tableobjectindexGUIservice.sendClickEvent(0, false);
+      this.objecteGUI.sendClickEvent(
+        event.node.data.tools_objects_pkey, true
+      )
+    } else if ( type === "tools_objects2") {
+      this.tableObjecteGUI.sendClickEvent(0, false);
+      this.versionsGUI.sendClickEvent(0, false);
+      this.items = [
+          {label:'New Index Object', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode, 2)}
+        ];
+      this.tableobjectindexGUIservice.sendClickEvent(0, false);
       this.objecteGUI.sendClickEvent(
         event.node.data.tools_objects_pkey, true
       )
     } else if ( type === 'tools_object_tables') {
       this.versionsGUI.sendClickEvent(0, false);
       this.objecteGUI.sendClickEvent(0,false);
+      this.tableobjectindexGUIservice.sendClickEvent(0, false)
       this.tableObjecteGUI.sendClickEvent(event.node.data.tools_object_tables_pkey, true);
     } else if ( type === 'tools_object_index') {
       this.versionsGUI.sendClickEvent(0, false);
       this.objecteGUI.sendClickEvent(0,false);
       this.tableObjecteGUI.sendClickEvent(0, false);
+      this.tableobjectindexGUIservice.sendClickEvent(event.node.data.tools_object_index_pkey, true)
     }
   }
 
-  addItem(node: any) {
+  addItem(node: any, object_type:number) {
     let type = this.getType(node);
     if (type === "tools_version") {
       this.versionsGUI.sendClickEvent(0, false);
       this.tableObjecteGUI.sendClickEvent(0, false);
-      this.objecteGUI.sendClickEvent(0,true);
-    } else if ( type === "tools_objects") {
+      this.objecteGUI.sendClickEvent(0,true, node, object_type);
+    } else if ( type === "tools_objects1") {
       this.versionsGUI.sendClickEvent(0,false);
       this.objecteGUI.sendClickEvent(0,false);
       this.tableObjecteGUI.sendClickEvent(0, true, node);
@@ -115,6 +133,9 @@ export class TreelistComponent{
   getType(node: any) {
     let type = node.id;
     type = type.split("-")[1];
+    if ( type === "tools_objects") {
+      type = type + node.data.tools_object_types_fkey
+    }
     return type;
   }
 }

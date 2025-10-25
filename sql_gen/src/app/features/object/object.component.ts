@@ -67,7 +67,7 @@ export class ObjectComponent {
   saveObject() {
   
     this.payload.tools_version_fkey = this.objectGUI.getVersionData().id.split("-")[0];;
-    this.payload.type = 'table',
+    this.payload.tools_object_types_fkey = this.tools_object_types_pkey;
 
     this.workflowservice.callWorkflow(
         'tools', 'save_new_object', this.payload
@@ -86,10 +86,17 @@ export class ObjectComponent {
           };
           this.payload = Object.assign({}, access("data")) ;
           if(this.payload.active) this.payload.active = true;
+          if(this.payload.tools_object_types_fkey > 0) {
+            this.tools_object_types_pkey = this.payload.tools_object_types_fkey
+          } else {
+            this.tools_object_types_pkey = this.objectGUI.getObjectType();
+          }
+          
       })
     } else {
       this.isVisible = false;
       this.payload = this.initialInterface();
+      this.tools_object_types_pkey = this.objectGUI.getObjectType();
     }
 
   }
@@ -105,7 +112,7 @@ export class ObjectComponent {
   initialInterface(){
     return {
       name:"", active:true,type:"", 
-      tools_version_fkey:0, tools_objects_pkey:0, 
+      tools_version_fkey:0, tools_objects_pkey:0, tools_object_types_fkey:0,
       editnum:1, insby:"", insdatetime:"", modby:"", moddatetime:""
     };
   }

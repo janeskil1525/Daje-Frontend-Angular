@@ -15,6 +15,7 @@ import { ObjectComponent } from './features/object/object.component';
 import { ResponseComponent } from './core/response/response.component';
 import { TableObjectComponent } from './features/table-object/table-object.component';
 import { VersionsComponent } from './features/versions/versions.component';
+import { TableObjectIndexComponent } from './features/table-object-index/table.object.index.component';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +36,8 @@ import { VersionsComponent } from './features/versions/versions.component';
     ObjectComponent,
     ResponseComponent,
     TableObjectComponent,
-    VersionsComponent
+    VersionsComponent,
+    TableObjectIndexComponent
   ],
 
   standalone: true
