@@ -62,7 +62,7 @@ export class TableObjectIndexComponent {
   saveTableObjectIndex() {
 
     this.workflowservice.callWorkflow(
-        'tools', 'save_new_table_object', this.payload
+        'tools', 'save_object_index', this.payload
     );
 
     this.isVisible = false;

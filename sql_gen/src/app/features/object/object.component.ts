@@ -15,6 +15,7 @@ import { ObjectService } from './object.service';
 import { ResponseService } from '../../core/response/response.service';
 import { ObjectTypeInterface } from './object.type.interface';
 import { ObjectTypeService } from './object.type.service';
+import { TreelistLoadService } from '../../core/treelist/treelist.load.service';
 
 @Component({
   selector: 'p-object-component',
@@ -48,6 +49,7 @@ export class ObjectComponent {
     private responseservice: ResponseService,
     private objectservice: ObjectService,
     private objectypeservice: ObjectTypeService,
+    private treelistloadservice:TreelistLoadService,
   ) {}
 
   ngOnInit() {
@@ -66,11 +68,12 @@ export class ObjectComponent {
 
   saveObject() {
   
+    this.payload.tools_projects_fkey = this.treelistloadservice.getTools_projects_pkey();
     this.payload.tools_version_fkey = this.objectGUI.getVersionData().id.split("-")[0];;
     this.payload.tools_object_types_fkey = this.tools_object_types_pkey;
 
     this.workflowservice.callWorkflow(
-        'tools', 'save_new_object', this.payload
+        'tools', 'save_object', this.payload
     );
 
     this.isVisible = false;
@@ -113,7 +116,7 @@ export class ObjectComponent {
     return {
       name:"", active:true,type:"", 
       tools_version_fkey:0, tools_objects_pkey:0, tools_object_types_fkey:0,
-      editnum:1, insby:"", insdatetime:"", modby:"", moddatetime:""
+      editnum:1, insby:"", insdatetime:"", modby:"", moddatetime:"", tools_projects_fkey:0
     };
   }
 }

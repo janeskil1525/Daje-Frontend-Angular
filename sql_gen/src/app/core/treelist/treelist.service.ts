@@ -8,13 +8,12 @@ import { Observable }  from 'rxjs';
 })
 
 export class TreelistService {
-   private data: any[] = [];
+  private data: any[] = [];
+  private http = inject(HttpClient);
   
-    private http = inject(HttpClient);
+  getData(tools_projects_pkey: number): Observable<ResponseInterface[]> {
   
-     getData(tools_projects_pkey: number): Observable<ResponseInterface[]> {
+    return this.http.get<ResponseInterface[]>('http://localhost/tools/api/v1/treelist/' + tools_projects_pkey);
   
-      return this.http.get<ResponseInterface[]>('http://localhost/tools/api/v1/treelist/' + tools_projects_pkey);
-  
-    }
+  }
 }

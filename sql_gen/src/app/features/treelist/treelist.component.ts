@@ -54,6 +54,13 @@ export class TreelistComponent{
 
   nodeSelect(event:any) {
     let type = this.getType(event.node);
+    if ( type.indexOf("tools_objects") > -1 ) {
+      this.items = [
+          {label:'Table', icon: PrimeIcons.PLUS, command: (event) => this.addObject(this.selectedNode, 1)}, 
+          {label:'Index', icon: PrimeIcons.PLUS, command: (event) => this.addObject(this.selectedNode, 2)}, 
+          {label:'SQL', icon: PrimeIcons.PLUS, command: (event) => this.addObject(this.selectedNode, 3)}
+        ];
+    }
     if (type === "tools_version") {
         this.tableObjecteGUI.sendClickEvent(0, false);
         this.objecteGUI.sendClickEvent(0,false);
@@ -62,17 +69,11 @@ export class TreelistComponent{
           event.node.data.tools_version_pkey, true
         );
 
-        this.items = [
-          {label:'Table', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode, 1)}, 
-          {label:'Index', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode, 2)}, 
-          {label:'SQL', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode, 3)}
-        ];
+        
     } else if ( type === "tools_objects1") {
       this.tableObjecteGUI.sendClickEvent(0, false);
       this.versionsGUI.sendClickEvent(0, false);
-      this.items = [
-          {label:'New Table Object', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode, 0)}
-        ];
+      this.items.push({label:'New Table Object', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode, 0)});
       this.tableobjectindexGUIservice.sendClickEvent(0, false);
       this.objecteGUI.sendClickEvent(
         event.node.data.tools_objects_pkey, true
@@ -80,9 +81,7 @@ export class TreelistComponent{
     } else if ( type === "tools_objects2") {
       this.tableObjecteGUI.sendClickEvent(0, false);
       this.versionsGUI.sendClickEvent(0, false);
-      this.items = [
-          {label:'New Index Object', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode, 2)}
-        ];
+      this.items.push({label:'New Index Object', icon: PrimeIcons.PLUS, command: (event) => this.addItem(this.selectedNode, 2)});
       this.tableobjectindexGUIservice.sendClickEvent(0, false);
       this.objecteGUI.sendClickEvent(
         event.node.data.tools_objects_pkey, true
@@ -102,16 +101,17 @@ export class TreelistComponent{
 
   addItem(node: any, object_type:number) {
     let type = this.getType(node);
-    if (type === "tools_version") {
-      this.versionsGUI.sendClickEvent(0, false);
-      this.tableObjecteGUI.sendClickEvent(0, false);
-      this.objecteGUI.sendClickEvent(0,true, node, object_type);
-    } else if ( type === "tools_objects1") {
+    if ( type === "tools_objects1") {
       this.versionsGUI.sendClickEvent(0,false);
       this.objecteGUI.sendClickEvent(0,false);
       this.tableObjecteGUI.sendClickEvent(0, true, node);
     }
-
+  }
+  
+  addObject(node: any, object_type:number) {
+    this.versionsGUI.sendClickEvent(0, false);
+    this.tableObjecteGUI.sendClickEvent(0, false);
+    this.objecteGUI.sendClickEvent(0,true, node, object_type);
   }
 
   onHide() {

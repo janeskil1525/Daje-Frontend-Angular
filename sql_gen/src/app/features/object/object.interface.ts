@@ -7,4 +7,5 @@ export interface ObjectInterface extends ResponseBase {
     name: string,
     active: boolean,
     tools_object_types_fkey:number,
+    tools_projects_fkey:number,
 }
