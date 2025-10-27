@@ -16,6 +16,8 @@ import { ResponseComponent } from './core/response/response.component';
 import { TableObjectComponent } from './features/table-object/table-object.component';
 import { VersionsComponent } from './features/versions/versions.component';
 import { TableObjectIndexComponent } from './features/table-object-index/table.object.index.component';
+import { TabsModule } from 'primeng/tabs';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 @Component({
   selector: 'app-root',
@@ -37,7 +39,9 @@ import { TableObjectIndexComponent } from './features/table-object-index/table.o
     ResponseComponent,
     TableObjectComponent,
     VersionsComponent,
-    TableObjectIndexComponent
+    TableObjectIndexComponent,
+    TabsModule,
+    ScrollPanelModule
   ],
 
   standalone: true
