@@ -73,7 +73,7 @@ export class TableObjectViewComponent {
     initialInterface(){
     return {
       name:"", fields:"",conditions:"", 
-      tools_version_fkey:0, tools_object_view_pkey:0, tools_objects_fkey:0
+      tools_version_fkey:0, tools_object_view_pkey:0, tools_objects_fkey:0,
       editnum:1, insby:"", insdatetime:"", modby:"", moddatetime:"", tools_projects_fkey:0
     };
   }
