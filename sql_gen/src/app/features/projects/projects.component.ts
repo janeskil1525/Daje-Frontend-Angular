@@ -1,7 +1,7 @@
 import { Component, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
-import { ProjectsService } from './projects.service';
+import { DatabaseService } from '../../core/database/database.service';
 import { ProjectsInterface } from './projects.interface';
 import { LocalStorageService } from '../../core/localstorage/local-storage.service';
 import { WorkflowService } from '../../core/workflow/workflow.service';
@@ -22,7 +22,7 @@ export class ProjectsComponent {
     projects: ProjectsInterface[] = [];
     
     constructor(
-      private projectservice: ProjectsService,  
+      private dbservice: DatabaseService,
       private localstorage: LocalStorageService, 
       private workflowservice: WorkflowService,
       private loadTreeListService: TreelistLoadService,
@@ -31,7 +31,7 @@ export class ProjectsComponent {
   
     ngOnInit() {
       this.localstorage.setItem('X-Token-Check', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW5pZXNfcGtleSI6MiwiaXNfYWRtaW4iOjAsIm5hbWUiOiJLbmVwIMOlIEtuw6VwIiwicGFzc3dvcmQiOiIwZ1lXNmpNdTd0XC9xZU5EdVFLaE43bE5KYm1pNEdOTGlUT3hkVlZScW1rMjROWUFqaUJUSWdFOGI0cFNYV1c2ZXZHT1BGUVdVMEttcnRydmpoWThkdUEiLCJzdXBwb3J0IjowLCJ1c2VyaWQiOiJqYW5AZGFqZS53b3JrIiwidXNlcm5hbWUiOiJKYW4gRXNraWxzc29uIiwidXNlcnNfcGtleSI6M30.sjcjX_9HVzDnIioX8iWBOZ7jMR26O4GXzxtzldlUWDw')
-       this.projectservice.getData().subscribe((response) => {
+       this.dbservice.load_all_records('Projects').subscribe((response) => {
 
             this.responseservice.sendResponse(response);
             let access = (key: string) => {

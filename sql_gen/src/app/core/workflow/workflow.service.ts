@@ -3,6 +3,7 @@ import { HttpClient, HttpRequest, HttpHandler, HttpEvent, HttpParams } from '@an
 import { LocalStorageService } from '../localstorage/local-storage.service';
 import { ResponseService } from '../../core/response/response.service';
 import { WorkflowPayloadInterface,  WorkflowInterface, WorkflowIdentificationData} from './workflow.interface';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +21,10 @@ export class WorkflowService {
 
     private http = inject(HttpClient);
     
-  
      execute(data: any) {
+        let url = environment.apiUrl;
         this.localkey = this.localstorage.getItem('X-Token-Check')!;
-        return this.http.put(`http://localhost/tools/api/v1/workflow/execute`, 
+        return this.http.put(url + `/tools/api/v1/workflow/execute`, 
            data, { headers:{
           'X-Token-Check': this.localkey
         }});

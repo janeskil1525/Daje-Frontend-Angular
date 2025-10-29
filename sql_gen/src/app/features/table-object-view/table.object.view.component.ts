@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { Subscription } from 'rxjs';
 import { TableObjectViewInterface } from './table.object.view.interface';
-import { TableObjectViewService } from './table.object.view.service';
+import { DatabaseService } from '../../core/database/database.service';
 import { TableObjectViewGuiService } from './table.object.view.gui.service';
 
 @Component({
@@ -18,8 +18,7 @@ import { TableObjectViewGuiService } from './table.object.view.gui.service';
     CardModule,
     FloatLabel,
     CommonModule,
-    ButtonModule,
-
+    ButtonModule
   ],
   templateUrl: './table.object.view.component.html',
   styleUrl: './table.object.view.component.css',
@@ -33,7 +32,7 @@ export class TableObjectViewComponent {
   constructor(    
     private workflowservice: WorkflowService,
     private responseservice: ResponseService,
-    private viewservice: TableObjectViewService,
+    private dbservice: DatabaseService,
     private viewGUI: TableObjectViewGuiService
   ){}
 
@@ -46,7 +45,7 @@ export class TableObjectViewComponent {
   showWin(tools_object_views_pkey:number) {
     if(this.viewGUI.getVisibility() === true) {
       this.isVisible = true;
-      this.viewservice.load_view(tools_object_views_pkey).subscribe((response)=> {
+      this.dbservice.load_record('View',tools_object_views_pkey).subscribe((response)=> {
           this.responseservice.sendResponse(response);
           let access = (key: string) => {
             return response[key as keyof typeof response];
@@ -60,7 +59,7 @@ export class TableObjectViewComponent {
     }
 
   }
-  saveObject() {
+  saveView() {
     this.payload.tools_version_fkey = this.viewGUI.getVersionData().id.split("-")[0];;
 
     this.workflowservice.callWorkflow(
@@ -76,5 +75,9 @@ export class TableObjectViewComponent {
       tools_version_fkey:0, tools_object_view_pkey:0, tools_objects_fkey:0,
       editnum:1, insby:"", insdatetime:"", modby:"", moddatetime:"", tools_projects_fkey:0
     };
+  }
+
+  winVisible(isVisible:boolean) {
+    this.isVisible = isVisible;
   }
 }
