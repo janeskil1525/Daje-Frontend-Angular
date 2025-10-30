@@ -11,11 +11,10 @@ import { Subscription } from 'rxjs';
 import { SelectModule } from 'primeng/select';
 import { ObjectInterface } from './object.interface';
 import { WorkflowService } from '../../core/workflow/workflow.service';
-import { ObjectService } from './object.service';
 import { ResponseService } from '../../core/response/response.service';
 import { ObjectTypeInterface } from './object.type.interface';
-import { ObjectTypeService } from './object.type.service';
 import { TreelistLoadService } from '../../core/treelist/treelist.load.service';
+import { DatabaseService } from '../../core/database/database.service';
 
 @Component({
   selector: 'p-object-component',
@@ -47,18 +46,13 @@ export class ObjectComponent {
     private objectGUI: ObjectGuiService, 
     private workflowservice: WorkflowService,
     private responseservice: ResponseService,
-    private objectservice: ObjectService,
-    private objectypeservice: ObjectTypeService,
+    private dbservice: DatabaseService,
     private treelistloadservice:TreelistLoadService,
   ) {}
 
   ngOnInit() {
-      this.objectypeservice.load_objects_types().subscribe((response) => {
-          this.responseservice.sendResponse(response);
-          let access = (key: string) => {
-            return response[key as keyof typeof response];
-          };
-          this.objecttypes  = <ObjectTypeInterface[]> Object.assign([], access("data")) ;
+      this.dbservice.load_all_records('ObjectTypes').subscribe((response) => {
+          this.objecttypes = (this.dbservice.process_response(response) as unknown) as ObjectTypeInterface[];        
       });
 
       this.loadObjectGUISub = this.objectGUI.getClickEvent().subscribe((tools_object_pkey)=>{
@@ -82,7 +76,7 @@ export class ObjectComponent {
   showWin(tools_object_pkey:number) {
     if(this.objectGUI.getVisibility() === true) {
       this.isVisible = true;
-      this.objectservice.load_object(tools_object_pkey).subscribe((response)=> {
+      this.dbservice.load_record('Object', tools_object_pkey).subscribe((response)=> {
           this.responseservice.sendResponse(response);
           let access = (key: string) => {
             return response[key as keyof typeof response];

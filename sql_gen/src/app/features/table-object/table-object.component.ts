@@ -10,10 +10,9 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { SelectModule } from 'primeng/select';
 import { TableObjectDatatypeInterface } from './table-object-datatype.interface';
-import { TableObjectDatatypeService } from './table-object-datatype.service';
 import { ResponseService } from '../../core/response/response.service';
 import { WorkflowService } from '../../core/workflow/workflow.service';
-import { TableObjectService } from './table-object.service';
+import { DatabaseService } from '../../core/database/database.service';
 
 @Component({
   selector: 'p-table-object-component',
@@ -42,19 +41,14 @@ export class TableObjectComponent {
 
   constructor(
     private tableObjecteGUI:TableObjectGUIService,
-    private tableobjectdatatypeservice:TableObjectDatatypeService,
     private responseservice: ResponseService,
     private workflowservice: WorkflowService,
-    private tableobjectservice: TableObjectService 
+    private dbservice: DatabaseService,
   ){ }
     
    ngOnInit() {
-    this.tableobjectdatatypeservice.load_table_objects_datatypes().subscribe((response) => {
-        this.responseservice.sendResponse(response);
-        let access = (key: string) => {
-          return response[key as keyof typeof response];
-        };
-        this.datatypes  = <TableObjectDatatypeInterface[]> Object.assign([], access("data")) ;
+    this.dbservice.load_all_records('TableObjectDatatypes').subscribe((response) => {
+      this.datatypes = (this.dbservice.process_response(response) as unknown) as TableObjectDatatypeInterface[];        
     });
 
     this.clickEventsubscription = this.tableObjecteGUI.getClickEvent().subscribe((tools_object_tables_pkey) => {
@@ -68,13 +62,8 @@ export class TableObjectComponent {
       this.initializeNew();      
     } else if (tools_object_tables_pkey > 0 && this.isVisible === true) {
       // Load table object
-      this.tableobjectservice.load_table_object(tools_object_tables_pkey).subscribe((response) => {
-        this.responseservice.sendResponse(response);
-        let access = (key: string) => {
-          return response[key as keyof typeof response];
-        };
-
-        this.payload  = <TableObjectInterface> Object.assign([], access("data")) ;
+      this.dbservice.load_record('TableObject', tools_object_tables_pkey).subscribe((response) => {        
+        this.payload = (this.dbservice.process_response(response) as unknown) as TableObjectInterface;
         if(this.payload.active) this.payload.active = true;
         if(this.payload.visible) this.payload.visible = true;
         this.tools_objects_tables_datatypes_pkey = this.payload.tools_objects_tables_datatypes_fkey        

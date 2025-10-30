@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { ResponseService } from '../../core/response/response.service';
 import { WorkflowService } from '../../core/workflow/workflow.service';
 import { TableObjectSqlInterface } from './table.object.sql.interface';
+import { DatabaseService } from '../../core/database/database.service';
 
 @Component({
   selector: 'app-table-object-sql-component',
@@ -27,11 +28,22 @@ export class TableObjectSqlComponent {
     isVisible:boolean = false;
     payload:TableObjectSqlInterface = this.initialInterface();
     clickEventsubscription!:Subscription;
-    constructor(
-        private responseservice: ResponseService,
-        private workflowservice: WorkflowService,          
+    constructor(        
+        private workflowservice: WorkflowService, 
+        private dbservice: DatabaseService,         
   ) {}
 
+  showWin(tools_object_index_pkey:number) {
+    // this.isVisible = this.tableobjectindexGUIservice.getVisibility();
+    if(this.isVisible) {
+      this.dbservice.load_record('ObjectIndex', tools_object_index_pkey).subscribe((response)=> {          
+          this.payload = (this.dbservice.process_response(response) as unknown) as TableObjectSqlInterface;
+          
+      })
+    } else {
+      this.payload = this.initialInterface();
+    }
+  }
     saveTableObjectSql() {
     this.workflowservice.callWorkflow(
         'tools', 'save_object_sql', this.payload

@@ -24,7 +24,7 @@ export class WorkflowService {
      execute(data: any) {
         let url = environment.apiUrl;
         this.localkey = this.localstorage.getItem('X-Token-Check')!;
-        return this.http.put(url + `/tools/api/v1/workflow/execute`, 
+        return this.http.put(url + `workflow/api/execute`, 
            data, { headers:{
           'X-Token-Check': this.localkey
         }});

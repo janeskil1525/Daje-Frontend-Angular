@@ -45,13 +45,8 @@ export class TableObjectViewComponent {
   showWin(tools_object_views_pkey:number) {
     if(this.viewGUI.getVisibility() === true) {
       this.isVisible = true;
-      this.dbservice.load_record('View',tools_object_views_pkey).subscribe((response)=> {
-          this.responseservice.sendResponse(response);
-          let access = (key: string) => {
-            return response[key as keyof typeof response];
-          };
-          this.payload = Object.assign({}, access("data")) ;
-          
+      this.dbservice.load_record('View',tools_object_views_pkey).subscribe((response)=> {          
+        this.payload = (this.dbservice.process_response(response) as unknown) as TableObjectViewInterface;        
       })
     } else {
       this.isVisible = false;
@@ -63,7 +58,7 @@ export class TableObjectViewComponent {
     this.payload.tools_version_fkey = this.viewGUI.getVersionData().id.split("-")[0];;
 
     this.workflowservice.callWorkflow(
-        'tools', 'save_view', this.payload
+        'tools', 'save_object_view', this.payload
     );
 
     this.isVisible = false;

@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TreeModule } from 'primeng/tree';
 import { MenuItem, PrimeIcons } from 'primeng/api';
-import { TreelistService } from '../../core/treelist/treelist.service';
 import { ContextMenu } from 'primeng/contextmenu';
 import { TreelistLoadService } from '../../core/treelist/treelist.load.service';
 import { Subscription } from 'rxjs';
@@ -14,6 +13,7 @@ import { TableObjectGUIService } from '../table-object/table-object.gui.service'
 import { VersionsGuiService } from '../versions/versions.gui.service';
 import { TableObjectIndexGuiService } from '../table-object-index/table.object.index.gui.service';
 import { TableObjectSqlGuiService } from '../table-object-sql/table.object.sql.gui.service';
+import { DatabaseService } from '../../core/database/database.service';
 
 @Component({
   selector: 'p-object-treelist',
@@ -34,7 +34,7 @@ export class TreelistComponent{
   loadTreelistDataSub!:Subscription;
 
    constructor(
-    private treelistservice: TreelistService, 
+    private dbservice: DatabaseService, 
     private loadTreeListService: TreelistLoadService,
     private objecteGUI: ObjectGuiService,
     private responseservice: ResponseService ,
@@ -46,8 +46,8 @@ export class TreelistComponent{
 
     ngOnInit() {
       this.loadTreelistDataSub = this.loadTreeListService.getClickEvent().subscribe(()=>{
-          this.treelistservice.getData(this.loadTreeListService.getTools_projects_pkey()).subscribe(response => {
-              this.loadTreelist(response)
+          this.dbservice.load_record('Treelist', this.loadTreeListService.getTools_projects_pkey()).subscribe(response => {
+            this.nodes = ((this.dbservice.process_response(response) as unknown) as any)
           });
       });
   }
@@ -107,7 +107,7 @@ export class TreelistComponent{
       this.tableObjecteGUI.sendClickEvent(0, true, node);
     }
   }
-  
+
   addObject(node: any, object_type:number) {
     this.versionsGUI.sendClickEvent(0, false);
     this.tableObjecteGUI.sendClickEvent(0, false);
@@ -119,17 +119,6 @@ export class TreelistComponent{
     this.selectedId = '';
   }
   
-  loadTreelist(response: ResponseInterface[]) {
-    this.responseservice.sendResponse(response);
-
-    let access = (key: string) => {
-      return response[key as keyof typeof response];
-    };
-
-    this.nodes = Object.assign([], access("data")) ;
-  
-  };
-
   getType(node: any) {
     let type = node.id;
     type = type.split("-")[1];

@@ -31,14 +31,8 @@ export class ProjectsComponent {
   
     ngOnInit() {
       this.localstorage.setItem('X-Token-Check', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW5pZXNfcGtleSI6MiwiaXNfYWRtaW4iOjAsIm5hbWUiOiJLbmVwIMOlIEtuw6VwIiwicGFzc3dvcmQiOiIwZ1lXNmpNdTd0XC9xZU5EdVFLaE43bE5KYm1pNEdOTGlUT3hkVlZScW1rMjROWUFqaUJUSWdFOGI0cFNYV1c2ZXZHT1BGUVdVMEttcnRydmpoWThkdUEiLCJzdXBwb3J0IjowLCJ1c2VyaWQiOiJqYW5AZGFqZS53b3JrIiwidXNlcm5hbWUiOiJKYW4gRXNraWxzc29uIiwidXNlcnNfcGtleSI6M30.sjcjX_9HVzDnIioX8iWBOZ7jMR26O4GXzxtzldlUWDw')
-       this.dbservice.load_all_records('Projects').subscribe((response) => {
-
-            this.responseservice.sendResponse(response);
-            let access = (key: string) => {
-              return response[key as keyof typeof response];
-            };
-
-            this.projects = Object.assign([], access("data")) ;
+       this.dbservice.load_all_records('Projects').subscribe((response) => {            
+            this.projects = (this.dbservice.process_response(response) as unknown) as ProjectsInterface[];
       });
     };
   

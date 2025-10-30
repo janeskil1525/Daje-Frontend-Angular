@@ -10,7 +10,7 @@ import { ResponseService } from '../../core/response/response.service';
 import { WorkflowService } from '../../core/workflow/workflow.service';
 import { TableObjectIndexInterface } from './table.object.index.interface';
 import { TableObjectIndexGuiService } from '../table-object-index/table.object.index.gui.service';
-import { TableObjectIndexService } from './table.object.index.service';
+import { DatabaseService } from '../../core/database/database.service';
 
 @Component({
   selector: 'p-table-object-index-component',
@@ -31,11 +31,10 @@ export class TableObjectIndexComponent {
   payload:TableObjectIndexInterface = this.initialInterface();
   clickEventsubscription!:Subscription;
 
-  constructor(
-        private responseservice: ResponseService,
+  constructor(      
         private workflowservice: WorkflowService, 
         private tableobjectindexGUIservice:TableObjectIndexGuiService,         
-        private indexservice:TableObjectIndexService,
+        private dbservice: DatabaseService,
   ) {}
 
   ngOnInit() {
@@ -47,12 +46,8 @@ export class TableObjectIndexComponent {
   showWin(tools_object_index_pkey:number) {
     this.isVisible = this.tableobjectindexGUIservice.getVisibility();
     if(this.isVisible) {
-      this.indexservice.load_table_object_index(tools_object_index_pkey).subscribe((response)=> {
-          this.responseservice.sendResponse(response);
-          let access = (key: string) => {
-            return response[key as keyof typeof response];
-          };
-          this.payload = Object.assign({}, access("data")) ;
+      this.dbservice.load_record('ObjectIndex', tools_object_index_pkey).subscribe((response)=> {
+        this.payload = (this.dbservice.process_response(response) as unknown) as TableObjectIndexInterface;
       })
     } else {
       this.payload = this.initialInterface();
@@ -64,6 +59,8 @@ export class TableObjectIndexComponent {
     this.workflowservice.callWorkflow(
         'tools', 'save_object_index', this.payload
     );
+
+    this.isVisible = false;
 
     this.isVisible = false;
   }
@@ -83,3 +80,5 @@ export class TableObjectIndexComponent {
     };
   }
 }
+
+
