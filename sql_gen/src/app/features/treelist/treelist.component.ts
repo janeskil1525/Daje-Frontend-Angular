@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Component, ViewChild  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TreeModule } from 'primeng/tree';
 import { MenuItem, PrimeIcons } from 'primeng/api';
@@ -7,8 +7,6 @@ import { TreelistLoadService } from '../../core/treelist/treelist.load.service';
 import { Subscription } from 'rxjs';
 import { BadgeModule } from 'primeng/badge';
 import { ObjectGuiService } from '../object/object.gui.service';
-import { ResponseService } from '../../core/response/response.service';
-import { ResponseInterface } from '../../core/response/response.interface';
 import { TableObjectGUIService } from '../table-object/table-object.gui.service';
 import { VersionsGuiService } from '../versions/versions.gui.service';
 import { TableObjectIndexGuiService } from '../table-object-index/table.object.index.gui.service';
@@ -19,7 +17,8 @@ import { DatabaseService } from '../../core/database/database.service';
   selector: 'p-object-treelist',
   imports: [TreeModule, ContextMenu,  BadgeModule, CommonModule],
   templateUrl: './treelist.html',
-  styleUrl: './treelist.css'
+  styleUrl: './treelist.css',
+  standalone: true,
 })
 
 
@@ -37,7 +36,6 @@ export class TreelistComponent{
     private dbservice: DatabaseService, 
     private loadTreeListService: TreelistLoadService,
     private objecteGUI: ObjectGuiService,
-    private responseservice: ResponseService ,
     private tableObjecteGUI: TableObjectGUIService,
     private versionsGUI: VersionsGuiService,
     private tableobjectindexGUIservice:TableObjectIndexGuiService,

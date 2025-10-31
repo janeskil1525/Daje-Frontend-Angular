@@ -14,6 +14,7 @@ export enum EndPoints {
     ObjectSQL = 'objects/sql/',
     ObjectView = 'object/view/',
     Versions = 'versions/',
+    ParamTreelist = 'parameters/treelist/',
 }
 
 export enum BaseEndpoint {

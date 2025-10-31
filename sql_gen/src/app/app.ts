@@ -18,6 +18,7 @@ import { VersionsComponent } from './features/versions/versions.component';
 import { TableObjectIndexComponent } from './features/table-object-index/table.object.index.component';
 import { TabsModule } from 'primeng/tabs';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { ParameterTreelistComponent } from './features/parameters/parameter.treelist.component';
 
 @Component({
   selector: 'app-root',
@@ -41,7 +42,8 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     VersionsComponent,
     TableObjectIndexComponent,
     TabsModule,
-    ScrollPanelModule
+    ScrollPanelModule,
+    ParameterTreelistComponent
   ],
 
   standalone: true
