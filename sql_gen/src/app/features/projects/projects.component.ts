@@ -6,13 +6,14 @@ import { ProjectsInterface } from './projects.interface';
 import { LocalStorageService } from '../../core/localstorage/local-storage.service';
 import { WorkflowService } from '../../core/workflow/workflow.service';
 import { TreelistLoadService } from '../../core/treelist/treelist.load.service';
-import { ResponseService } from '../../core/response/response.service';
+import { ParameterTreelistLoadService } from '../parameters/parameter.treelist.load.service'
 
 @Component({
   selector: 'p-select-projects',
   imports: [SelectModule, FormsModule],
   templateUrl: './projects.html',
-  styleUrl: './projects.css'
+  styleUrl: './projects.css',
+  standalone: true,
 })
 
 export class ProjectsComponent {
@@ -26,7 +27,7 @@ export class ProjectsComponent {
       private localstorage: LocalStorageService, 
       private workflowservice: WorkflowService,
       private loadTreeListService: TreelistLoadService,
-      private responseservice: ResponseService 
+      private loadParamTreeService: ParameterTreelistLoadService,
     ) {}  
   
     ngOnInit() {
@@ -40,6 +41,7 @@ export class ProjectsComponent {
       let result = this.projects.find(project => project.tools_projects_pkey === tools_projects_pkey);
       this.workflowservice.setConnectorData('tools_projects', result!.tools_projects_pkey, result!.workflow_fkey)
       this.loadTreeListService.sendClickEvent(tools_projects_pkey);
+      this.loadParamTreeService.sendClickEvent(tools_projects_pkey);
     };
 
 }

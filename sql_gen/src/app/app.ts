@@ -50,7 +50,7 @@ import { ParameterTreelistComponent } from './features/parameters/parameter.tree
 })
 
 export class App {
-  
+
 }
 
 

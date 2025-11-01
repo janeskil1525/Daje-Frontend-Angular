@@ -44,7 +44,8 @@ export class TreelistComponent{
 
     ngOnInit() {
       this.loadTreelistDataSub = this.loadTreeListService.getClickEvent().subscribe(()=>{
-          this.dbservice.load_record('Treelist', this.loadTreeListService.getTools_projects_pkey()).subscribe(response => {
+        let tools_projects_pkey = this.loadTreeListService.getTools_projects_pkey()
+          this.dbservice.load_record('Treelist', tools_projects_pkey).subscribe((response) => {
             this.nodes = ((this.dbservice.process_response(response) as unknown) as any)
           });
       });
