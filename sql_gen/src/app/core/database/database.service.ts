@@ -28,6 +28,11 @@ export class DatabaseService {
         this.key2 = -1;
       }
       let url = this.end.load_record_endpoint(endpoint, load_pkey);
+       if(this.key2 > -1) {
+        this.end.setKey2(-1);
+        this.key2 = -1;
+      }
+      
       let response = this.http.get <ResponseInterface> (url,{
         headers:{
           'X-Token-Check': this.localkey
@@ -48,13 +53,18 @@ export class DatabaseService {
     return response;
   }
 
-  public process_response(response:any) {
+  public process_response(response:any, default_val:any, type:any = []) {
     this.responseservice.sendResponse(response);
     let access = (key: string) => {
         return response[key as keyof typeof response];
       };
-    
-    return <any> Object.assign([], access("data")) ;
+    let data = <any> Object.assign(type, access("data"));
+    if(Array.isArray(data)) {
+      if(data.length === 0) {
+          data = default_val;
+      }
+    }
+    return data;
   }
 
   public setKey2(key2:number) {

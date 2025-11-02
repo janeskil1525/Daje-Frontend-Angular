@@ -37,7 +37,7 @@ export class TableObjectSqlComponent {
     // this.isVisible = this.tableobjectindexGUIservice.getVisibility();
     if(this.isVisible) {
       this.dbservice.load_record('ObjectIndex', tools_object_index_pkey).subscribe((response)=> {          
-          this.payload = (this.dbservice.process_response(response) as unknown) as TableObjectSqlInterface;
+          this.payload = (this.dbservice.process_response(response, this.initialInterface()) as unknown) as TableObjectSqlInterface;
           
       })
     } else {

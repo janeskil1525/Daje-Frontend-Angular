@@ -54,7 +54,11 @@ export class ParameterValuesComponent {
      if(this.isVisible){
         this.dbservice.setKey2(tools_parameters_pkey)
         this.dbservice.load_record('ParameterValue', tools_projects_pkey).subscribe((response) => {        
-            this.payload = (this.dbservice.process_response(response) as unknown) as ParameterValuesInterface;
+            this.payload = (
+              this.dbservice.process_response(
+                response, 
+                this.initialInterface(),
+              {}) as unknown) as ParameterValuesInterface;
             if(this.payload.active) this.payload.active = true;          
         });
     } else {

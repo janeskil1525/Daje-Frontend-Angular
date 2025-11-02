@@ -46,7 +46,7 @@ export class TreelistComponent{
       this.loadTreelistDataSub = this.loadTreeListService.getClickEvent().subscribe(()=>{
         let tools_projects_pkey = this.loadTreeListService.getTools_projects_pkey()
           this.dbservice.load_record('Treelist', tools_projects_pkey).subscribe((response) => {
-            this.nodes = ((this.dbservice.process_response(response) as unknown) as any)
+            this.nodes = ((this.dbservice.process_response(response,[]) as unknown) as any)
           });
       });
   }

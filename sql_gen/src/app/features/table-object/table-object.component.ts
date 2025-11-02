@@ -48,7 +48,7 @@ export class TableObjectComponent {
     
    ngOnInit() {
     this.dbservice.load_all_records('TableObjectDatatypes').subscribe((response) => {
-      this.datatypes = (this.dbservice.process_response(response) as unknown) as TableObjectDatatypeInterface[];        
+      this.datatypes = (this.dbservice.process_response(response, this.initialInterface()) as unknown) as TableObjectDatatypeInterface[];        
     });
 
     this.clickEventsubscription = this.tableObjecteGUI.getClickEvent().subscribe((tools_object_tables_pkey) => {
@@ -63,7 +63,12 @@ export class TableObjectComponent {
     } else if (tools_object_tables_pkey > 0 && this.isVisible === true) {
       // Load table object
       this.dbservice.load_record('TableObject', tools_object_tables_pkey).subscribe((response) => {        
-        this.payload = (this.dbservice.process_response(response) as unknown) as TableObjectInterface;
+        this.payload = (
+          this.dbservice.process_response(
+            response,
+            this.initialInterface(),
+            {}
+          ) as unknown) as TableObjectInterface;
         if(this.payload.active) this.payload.active = true;
         if(this.payload.visible) this.payload.visible = true;
         this.tools_objects_tables_datatypes_pkey = this.payload.tools_objects_tables_datatypes_fkey        
@@ -84,7 +89,7 @@ export class TableObjectComponent {
     this.payload.tools_objects_tables_datatypes_fkey = tools_objects_tables_datatypes_pkey;
 
     this.workflowservice.callWorkflow(
-        'tools', 'save_new_table_object_index', this.payload
+        'tools', 'save_object_table', this.payload
     );
 
     this.isVisible = false;

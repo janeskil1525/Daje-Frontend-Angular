@@ -46,7 +46,7 @@ export class TableObjectViewComponent {
     if(this.viewGUI.getVisibility() === true) {
       this.isVisible = true;
       this.dbservice.load_record('View',tools_object_views_pkey).subscribe((response)=> {          
-        this.payload = (this.dbservice.process_response(response) as unknown) as TableObjectViewInterface;        
+        this.payload = (this.dbservice.process_response(response, this.initialInterface()) as unknown) as TableObjectViewInterface;        
       })
     } else {
       this.isVisible = false;

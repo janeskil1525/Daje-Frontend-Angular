@@ -52,7 +52,10 @@ export class ObjectComponent {
 
   ngOnInit() {
       this.dbservice.load_all_records('ObjectTypes').subscribe((response) => {
-          this.objecttypes = (this.dbservice.process_response(response) as unknown) as ObjectTypeInterface[];        
+          this.objecttypes = (
+            this.dbservice.process_response(
+              response, this.initialInterface()
+            ) as unknown) as ObjectTypeInterface[];        
       });
 
       this.loadObjectGUISub = this.objectGUI.getClickEvent().subscribe((tools_object_pkey)=>{

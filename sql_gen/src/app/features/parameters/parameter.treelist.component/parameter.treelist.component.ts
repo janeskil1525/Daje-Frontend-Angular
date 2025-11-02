@@ -34,7 +34,7 @@ export class ParameterTreelistComponent {
   ngOnInit() {
     this.paramTreelist = this.ParamTreeListService.getClickEvent().subscribe(()=>{
         this.dbservice.load_all_records('ParamTreelist').subscribe(response => {
-          this.paramnodes = ((this.dbservice.process_response(response) as unknown) as any)
+          this.paramnodes = ((this.dbservice.process_response(response,[]) as unknown) as any)
         });
     });
   }
