@@ -6,7 +6,7 @@ import { ProjectsInterface } from './projects.interface';
 import { LocalStorageService } from '../../core/localstorage/local-storage.service';
 import { WorkflowService } from '../../core/workflow/workflow.service';
 import { TreelistLoadService } from '../../core/treelist/treelist.load.service';
-import { ParameterTreelistLoadService } from '../parameters/parameter.treelist.load.service'
+import { ParameterTreelistLoadService } from '../parameters/parameter.treelist.component/parameter.treelist.load.service'
 
 @Component({
   selector: 'p-select-projects',

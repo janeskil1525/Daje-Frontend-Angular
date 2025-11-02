@@ -18,7 +18,8 @@ import { VersionsComponent } from './features/versions/versions.component';
 import { TableObjectIndexComponent } from './features/table-object-index/table.object.index.component';
 import { TabsModule } from 'primeng/tabs';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
-import { ParameterTreelistComponent } from './features/parameters/parameter.treelist.component';
+import { ParameterTreelistComponent } from './features/parameters/parameter.treelist.component/parameter.treelist.component';
+import { ParameterValuesComponent } from './features/parameters/parameter.values.component/parameter.values.component';
 
 @Component({
   selector: 'app-root',
@@ -43,7 +44,8 @@ import { ParameterTreelistComponent } from './features/parameters/parameter.tree
     TableObjectIndexComponent,
     TabsModule,
     ScrollPanelModule,
-    ParameterTreelistComponent
+    ParameterTreelistComponent,
+    ParameterValuesComponent
   ],
 
   standalone: true

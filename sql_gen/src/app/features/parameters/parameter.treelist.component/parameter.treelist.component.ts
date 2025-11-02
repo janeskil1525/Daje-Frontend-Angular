@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DatabaseService } from '../../core/database/database.service';
+import { DatabaseService } from '../../../core/database/database.service';
 import { ParameterTreelistLoadService } from './parameter.treelist.load.service'
 import { CommonModule } from '@angular/common';
 import { TreeModule } from 'primeng/tree';
 import { BadgeModule } from 'primeng/badge';
-
+import { ParameterValuesLoadService } from '../parameter.values.component/parameter.values.load.service';
 
 @Component({
   selector: 'p-parameter-treelist-component',
@@ -28,6 +28,7 @@ export class ParameterTreelistComponent {
   constructor(
       private dbservice: DatabaseService, 
       private ParamTreeListService: ParameterTreelistLoadService,
+      private loadValueGUIService: ParameterValuesLoadService,
   ){}
 
   ngOnInit() {
@@ -39,6 +40,21 @@ export class ParameterTreelistComponent {
   }
 
   nodeSelect(event:any) {
+    let type = this.getType(event.node);
+    if ( type.length < 17 && type.indexOf("tools_parameter") > -1 ) {        
+        this.loadValueGUIService.sendClickEvent(
+          this.ParamTreeListService.getTools_projects_pkey(), 
+          event.node.data.tools_parameters_pkey, true
+        );
+    }
+  }
 
+  getType(node: any) {
+    let type = node.id;
+    type = type.split("-")[1];
+    if ( type === "tools_objects") {
+      type = type + node.data.tools_object_types_fkey
+    }
+    return type;
   }
 }
