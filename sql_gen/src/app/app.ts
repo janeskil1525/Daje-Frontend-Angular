@@ -20,6 +20,7 @@ import { TabsModule } from 'primeng/tabs';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ParameterTreelistComponent } from './features/parameters/parameter.treelist.component/parameter.treelist.component';
 import { ParameterValuesComponent } from './features/parameters/parameter.values.component/parameter.values.component';
+import { GenerateSqlComponent } from './features/generators/generate.sql.component/generate.sql.component';
 
 @Component({
   selector: 'app-root',
@@ -45,7 +46,8 @@ import { ParameterValuesComponent } from './features/parameters/parameter.values
     TabsModule,
     ScrollPanelModule,
     ParameterTreelistComponent,
-    ParameterValuesComponent
+    ParameterValuesComponent,
+    GenerateSqlComponent
   ],
 
   standalone: true
