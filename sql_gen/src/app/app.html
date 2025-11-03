@@ -22,7 +22,6 @@
                 <p-tablist>
                     <p-tab value="0" >Objects</p-tab>
                     <p-tab value="1" >Parameters</p-tab>
-                    <p-tab value="3" >Generators</p-tab>
                 </p-tablist>
                 <p-tabpanels>
                     <p-tabpanel value="0" >
@@ -32,9 +31,6 @@
                     </p-tabpanel>
                     <p-tabpanel value="1">
                         <p-parameter-treelist-component></p-parameter-treelist-component>
-                    </p-tabpanel>
-                    <p-tabpanel value="2">
-                        <p-generate-sql-component></p-generate-sql-component>
                     </p-tabpanel>
                 </p-tabpanels>
             </p-tabs>
@@ -52,7 +48,7 @@
     </ng-template>
        <ng-template #panel>
         <div class="card flex justify-center">
-            Panel 3
+            <p-generate-sql-component></p-generate-sql-component>
                 
         </div>
     </ng-template>

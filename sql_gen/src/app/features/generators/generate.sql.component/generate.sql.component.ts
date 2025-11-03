@@ -13,7 +13,8 @@ import { CardModule } from 'primeng/card';
     CardModule
   ],
   templateUrl: './generate.sql.component.html',
-  styleUrl: './generate.sql.component.css'
+  styleUrl: './generate.sql.component.css',
+  standalone:true,
 })
 export class GenerateSqlComponent {
 
